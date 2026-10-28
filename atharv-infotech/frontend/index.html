@@ -1,0 +1,2745 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Atharva Infotech | Guaranteed Lowest Price IT Products & Services</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#f0f7ff',
+              100: '#e0effe',
+              500: '#2563eb',
+              600: '#1d4ed8',
+              700: '#1e40af',
+              800: '#1e3a8a',
+              900: '#0f172a',
+              emerald: '#059669',
+              lightBg: '#f8fafc',
+              border: '#e2e8f0'
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+  <!-- Google Fonts: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- React and ReactDOM CDNs -->
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <!-- Babel Standalone CDN -->
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    ::-webkit-scrollbar { width: 8px; height: 8px; }
+    ::-webkit-scrollbar-track { background: #f1f5f9; }
+    ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: #2563eb; }
+    .glass-nav {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+    }
+    .hover-glow:hover {
+      box-shadow: 0 10px 25px -5px rgba(37, 99, 235, 0.12), 0 8px 10px -6px rgba(37, 99, 235, 0.08);
+    }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen antialiased selection:bg-brand-500 selection:text-white">
+  <div id="root"></div>
+
+  <script type="text/babel">
+    const { useState, useEffect, useMemo } = React;
+
+    // --- EXPANDED REAL HARDWARE CATALOG ---
+    const INITIAL_PRODUCTS = [
+      // Monitors
+      {
+        id: 'p1',
+        name: 'Samsung Odyssey G7 32" Curved QHD 240Hz Gaming Monitor',
+        brand: 'Samsung',
+        category: 'monitors',
+        price: 48999,
+        competitorPrice: 56999,
+        competitorName: 'Flipkart',
+        rating: 4.9,
+        reviewsCount: 210,
+        inStock: true,
+        stockCount: 14,
+        specs: { Screen: '32-inch 1000R', Refresh: '240Hz', Resolution: '2560x1440 QHD', Response: '1ms GTG' },
+        image: 'https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?w=800&auto=format&fit=crop&q=80',
+        description: 'Immersive 1000R curved gaming screen with Samsung QLED vibrant color spectrum.',
+        isFeatured: true,
+        isTrending: true
+      },
+      {
+        id: 'p2',
+        name: 'Dell UltraSharp U2723QE 27" 4K USB-C Hub Monitor',
+        brand: 'Dell',
+        category: 'monitors',
+        price: 42999,
+        competitorPrice: 51999,
+        competitorName: 'Amazon',
+        rating: 4.9,
+        reviewsCount: 145,
+        inStock: true,
+        stockCount: 18,
+        specs: { Panel: '27" IPS Black', Resolution: '4K UHD', PowerPD: '90W USB-C', Color: '100% sRGB' },
+        image: 'https://images.unsplash.com/photo-1585792180666-f7347c490ee2?w=800&auto=format&fit=crop&q=80',
+        description: 'Pinnacle productivity panel featuring IPS Black technology with 2000:1 contrast ratio.',
+        isFeatured: true,
+        isTrending: false
+      },
+      {
+        id: 'p3',
+        name: 'BenQ EW3280U 32" 4K HDRi Entertainment Monitor',
+        brand: BenQ => BenQ,
+        category: 'monitors',
+        price: 49990,
+        competitorPrice: 58990,
+        competitorName: 'Flipkart',
+        rating: 4.7,
+        reviewsCount: 88,
+        inStock: true,
+        stockCount: 8,
+        specs: { Screen: '32" 4K IPS', Audio: 'treVolo 2.1 Speakers', EyeCare: 'Brightness Intelligence Plus' },
+        image: 'https://images.unsplash.com/photo-1547082299-de196ea013d6?w=800&auto=format&fit=crop&q=80',
+        description: 'Built-in 2.1 channel speaker system with rich subwoofers and proprietary HDRi color fine-tuning.',
+        isFeatured: false,
+        isTrending: false
+      },
+      {
+        id: 'p4',
+        name: 'ASUS ROG Swift OLED PG27AQDM 27" 240Hz Gaming Display',
+        brand: 'ASUS',
+        category: 'monitors',
+        price: 72999,
+        competitorPrice: 84999,
+        competitorName: 'Amazon',
+        rating: 5.0,
+        reviewsCount: 104,
+        inStock: true,
+        stockCount: 5,
+        specs: { Screen: '27" QHD OLED', Refresh: '240Hz', Response: '0.03ms', Heatsink: 'Custom Custom Passive' },
+        image: 'https://images.unsplash.com/photo-1593640408182-31c70c8268f5?w=800&auto=format&fit=crop&q=80',
+        description: 'Blazing 0.03ms response rate with deep OLED pitch blacks and custom cooling heatsink.',
+        isFeatured: true,
+        isTrending: true
+      },
+
+      // Keyboards & Mice
+      {
+        id: 'p5',
+        name: 'Logitech MX Master 3S Wireless Performance Mouse',
+        brand: 'Logitech',
+        category: 'keyboards',
+        price: 7999,
+        competitorPrice: 9995,
+        competitorName: 'Flipkart',
+        rating: 4.9,
+        reviewsCount: 420,
+        inStock: true,
+        stockCount: 30,
+        specs: { Sensor: '8000 DPI Darkfield', Clicks: '80% Quieter', Scroll: 'MagSpeed Electromagnetic' },
+        image: 'https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?w=800&auto=format&fit=crop&q=80',
+        description: 'Iconic ergonomic master mouse with quiet click technology and multi-device flow switching.',
+        isFeatured: true,
+        isTrending: true
+      },
+      {
+        id: 'p6',
+        name: 'Corsair K95 RGB Platinum XT Mechanical Keyboard',
+        brand: 'Corsair',
+        category: 'keyboards',
+        price: 13999,
+        competitorPrice: 17999,
+        competitorName: 'Amazon',
+        rating: 4.8,
+        reviewsCount: 160,
+        inStock: true,
+        stockCount: 12,
+        specs: { Switch: 'CHERRY MX Speed Silver', Frame: 'Anodized Aluminum', Keys: 'PBT Double-Shot' },
+        image: 'https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=800&auto=format&fit=crop&q=80',
+        description: 'Dynamic per-key RGB backlighting with dedicated Elgato Stream Deck macro macro keys.',
+        isFeatured: false,
+        isTrending: false
+      },
+      {
+        id: 'p7',
+        name: 'Razer DeathAdder V3 Pro Ultra-light Wireless Mouse',
+        brand: 'Logitech',
+        category: 'keyboards',
+        price: 11499,
+        competitorPrice: 13999,
+        competitorName: 'Flipkart',
+        rating: 4.8,
+        reviewsCount: 95,
+        inStock: true,
+        stockCount: 16,
+        specs: { Weight: '63g Ultra-Lightweight', Sensor: 'Focus Pro 30K Optical', Battery: 'Up to 90 Hrs' },
+        image: 'https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?w=800&auto=format&fit=crop&q=80',
+        description: 'Refined ergonomic shape engineered alongside top esports tournament professionals.',
+        isFeatured: false,
+        isTrending: true
+      },
+
+      // Storage & RAM
+      {
+        id: 'p8',
+        name: 'Samsung 990 PRO 2TB PCIe 4.0 NVMe M.2 SSD',
+        brand: 'Samsung',
+        category: 'storage',
+        price: 14499,
+        competitorPrice: 18499,
+        competitorName: 'Flipkart',
+        rating: 4.9,
+        reviewsCount: 380,
+        inStock: true,
+        stockCount: 35,
+        specs: { Read: 'Up to 7450 MB/s', Write: 'Up to 6900 MB/s', Form: 'M.2 2280 NVMe' },
+        image: 'https://images.unsplash.com/photo-1597872200969-2b65d56bd16b?w=800&auto=format&fit=crop&q=80',
+        description: 'Extreme random read speeds for instant gaming load times and high-res video scrubbing.',
+        isFeatured: true,
+        isTrending: true
+      },
+      {
+        id: 'p9',
+        name: 'WD_BLACK SN850X 1TB High-Speed NVMe Gaming SSD',
+        brand: 'WD',
+        category: 'storage',
+        price: 7899,
+        competitorPrice: 9990,
+        competitorName: 'Amazon',
+        rating: 4.8,
+        reviewsCount: 210,
+        inStock: true,
+        stockCount: 22,
+        specs: { Speed: '7300 MB/s Read', Interface: 'PCIe Gen4 x4', Tech: 'Game Mode 2.0' },
+        image: 'https://images.unsplash.com/photo-1544652478-6653e09f18a2?w=800&auto=format&fit=crop&q=80',
+        description: 'Crush latency and heat throttling with Western Digital hardware thermal management.',
+        isFeatured: false,
+        isTrending: false
+      },
+      {
+        id: 'p10',
+        name: 'Corsair Vengeance DDR5 32GB (2x16GB) 6000MHz RAM',
+        brand: 'Corsair',
+        category: 'storage',
+        price: 9499,
+        competitorPrice: 11800,
+        competitorName: 'Flipkart',
+        rating: 4.8,
+        reviewsCount: 115,
+        inStock: true,
+        stockCount: 20,
+        specs: { Type: 'DDR5 Desktop', Speed: '6000MHz', Profile: 'Intel XMP 3.0 & AMD EXPO' },
+        image: 'https://images.unsplash.com/photo-1562976540-1502c2145186?w=800&auto=format&fit=crop&q=80',
+        description: 'Compact aluminum heatspreader designed for superior cooling and high memory overclocking.',
+        isFeatured: false,
+        isTrending: true
+      },
+
+      // Laptops & Computers
+      {
+        id: 'p11',
+        name: 'Lenovo ThinkPad X1 Carbon Gen 11 (i7-1365U / 32GB / 1TB)',
+        brand: 'Lenovo',
+        category: 'computers',
+        price: 132999,
+        competitorPrice: 154990,
+        competitorName: 'Amazon',
+        rating: 4.9,
+        reviewsCount: 89,
+        inStock: true,
+        stockCount: 6,
+        specs: { CPU: 'Intel Core i7-1365U', RAM: '32GB LPDDR5', Display: '14" 2.8K OLED', Weight: '1.12 kg' },
+        image: 'https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=800&auto=format&fit=crop&q=80',
+        description: 'Ultralight carbon-fiber build meeting military durability standards for executives.',
+        isFeatured: true,
+        isTrending: true
+      },
+      {
+        id: 'p12',
+        name: 'HP Spectre x360 14" 2-in-1 Touch OLED Convertible',
+        brand: 'HP',
+        category: 'computers',
+        price: 112999,
+        competitorPrice: 129990,
+        competitorName: 'Flipkart',
+        rating: 4.8,
+        reviewsCount: 72,
+        inStock: true,
+        stockCount: 8,
+        specs: { CPU: 'Intel Core Ultra 7', Screen: '14" 3K+ Touch OLED', Stylus: 'HP Rechargeable Pen' },
+        image: 'https://images.unsplash.com/photo-1541807084-5c52b6b3adef?w=800&auto=format&fit=crop&q=80',
+        description: 'AI-enhanced performance with 360-degree hinge and vibrant OLED touchscreen.',
+        isFeatured: false,
+        isTrending: false
+      },
+      {
+        id: 'p13',
+        name: 'ASUS ROG Strix RTX 4080 Custom Gaming Rig Desktop',
+        brand: 'ASUS',
+        category: 'computers',
+        price: 224999,
+        competitorPrice: 259990,
+        competitorName: 'Amazon',
+        rating: 5.0,
+        reviewsCount: 42,
+        inStock: true,
+        stockCount: 4,
+        specs: { CPU: 'Intel i9-14900KF', GPU: 'RTX 4080 Super 16GB', RAM: '64GB DDR5', Cooling: '360mm AIO' },
+        image: 'https://images.unsplash.com/photo-1587202372775-e229f172b9d7?w=800&auto=format&fit=crop&q=80',
+        description: 'Pre-tested custom gaming monster built for uncompromised 4K ray-traced rendering.',
+        isFeatured: true,
+        isTrending: true
+      },
+      {
+        id: 'p14',
+        name: 'Apple MacBook Pro 16" M3 Max (36GB / 1TB SSD)',
+        brand: 'Apple',
+        category: 'computers',
+        price: 314999,
+        competitorPrice: 349900,
+        competitorName: 'Flipkart',
+        rating: 5.0,
+        reviewsCount: 130,
+        inStock: true,
+        stockCount: 5,
+        specs: { Chip: 'Apple M3 Max 14-Core', RAM: '36GB Unified', Display: 'Liquid Retina XDR' },
+        image: 'https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=800&auto=format&fit=crop&q=80',
+        description: 'Peak workstation power for video editors, developers, and 3D artists.',
+        isFeatured: true,
+        isTrending: false
+      },
+
+      // Printers & Networking
+      {
+        id: 'p15',
+        name: 'Epson EcoTank L3250 Wi-Fi All-in-One InkTank Printer',
+        brand: 'Epson',
+        category: 'printers',
+        price: 13499,
+        competitorPrice: 15999,
+        competitorName: 'Amazon',
+        rating: 4.7,
+        reviewsCount: 240,
+        inStock: true,
+        stockCount: 18,
+        specs: { Type: 'InkTank Wireless', Yield: '4500 Black / 7500 Color', Connectivity: 'Wi-Fi Direct' },
+        image: 'https://images.unsplash.com/photo-1612815150548-9960c6d5b0a3?w=800&auto=format&fit=crop&q=80',
+        description: 'Ultra-low cost cartridge-free printing for home offices and commercial setups.',
+        isFeatured: false,
+        isTrending: false
+      },
+      {
+        id: 'p16',
+        name: 'Netgear Nighthawk WiFi 6E Tri-Band Router (RAXE500)',
+        brand: 'Netgear',
+        category: 'printers',
+        price: 33999,
+        competitorPrice: 39990,
+        competitorName: 'Flipkart',
+        rating: 4.8,
+        reviewsCount: 65,
+        inStock: true,
+        stockCount: 9,
+        specs: { Speed: 'Up to 10.8 Gbps', Bands: '2.4GHz + 5GHz + 6GHz', Coverage: '3500 Sq Ft' },
+        image: 'https://images.unsplash.com/photo-1544197150-b99a580bb7a8?w=800&auto=format&fit=crop&q=80',
+        description: 'Unlock ultra-fast 6GHz Wi-Fi bandwidth for lag-free 8K streaming and VR gaming.',
+        isFeatured: true,
+        isTrending: true
+      },
+
+      // Projectors
+      {
+        id: 'p17',
+        name: 'BenQ TK700STi 4K HDR Short Throw Gaming Projector',
+        brand: 'BenQ',
+        category: 'projectors',
+        price: 106999,
+        competitorPrice: 124990,
+        competitorName: 'Amazon',
+        rating: 4.8,
+        reviewsCount: 50,
+        inStock: true,
+        stockCount: 6,
+        specs: { Resolution: 'True 4K UHD', Brightness: '3000 ANSI Lumens', InputLag: '16ms at 4K' },
+        image: 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=800&auto=format&fit=crop&q=80',
+        description: 'Short throw lens projects 100-inch images from just 6.5 feet away.',
+        isFeatured: true,
+        isTrending: false
+      }
+    ];
+
+    const IT_SERVICES = [
+      {
+        id: 's1',
+        title: 'PC & Laptop Hardware Repair',
+        icon: 'fa-screwdriver-wrench',
+        shortDesc: 'Chip-level motherboard fixing, liquid spill cleanup, screen replacement, and thermal compound repasting.',
+        priceFrom: 499,
+        turnaround: '24-48 Hours',
+        details: ['Motherboard Diagnostics', 'BGA Chip Resoldering', 'Thermal Repasting', 'BIOS Flashing']
+      },
+      {
+        id: 's2',
+        title: 'High-Speed SSD Upgrade & Data Cloning',
+        icon: 'fa-memory',
+        shortDesc: 'Speed up sluggish computers by migrating Windows OS and personal files directly to fast M.2 NVMe SSDs.',
+        priceFrom: 399,
+        turnaround: '2-4 Hours',
+        details: ['Bit-for-Bit Data Clone', 'Dual Channel RAM Config', 'Thermal Pad Install', 'Speed Benchmark']
+      },
+      {
+        id: 's3',
+        title: 'Hard Drive Data Recovery',
+        icon: 'fa-database',
+        shortDesc: 'Extract critical files from physically damaged hard drives, corrupted pen drives, or encrypted volumes.',
+        priceFrom: 999,
+        turnaround: '1-3 Business Days',
+        details: ['Deep Sector Scan', 'RAW File Recovery', 'RAID Array Rescue', 'Secure Drive Sanitization']
+      },
+      {
+        id: 's4',
+        title: 'Office Networking & Mesh Wi-Fi',
+        icon: 'fa-network-wired',
+        shortDesc: 'Structured Cat6 cabling, rack deployment, managed gigabit switches, and seamless mesh coverage.',
+        priceFrom: 1499,
+        turnaround: 'On-Site Visit',
+        details: ['Cat6A Network Cabling', 'Switch Trunking', 'Wi-Fi Deadzone Fix', 'Firewall Setup']
+      },
+      {
+        id: 's5',
+        title: 'Projector & Screen AV Mounting',
+        icon: 'fa-display',
+        shortDesc: 'Ceiling mounts, motorized presentation screen rigging, concealed fiber optic HDMI wiring, and speaker tuning.',
+        priceFrom: 1199,
+        turnaround: 'Scheduled Slot',
+        details: ['Ceiling Rigging', 'Concealed Cable Runs', 'Lens Calibration', 'Wireless HDMI Receiver']
+      },
+      {
+        id: 's6',
+        title: 'Corporate IT AMC Maintenance',
+        icon: 'fa-shield-halved',
+        shortDesc: 'Annual maintenance contracts for business offices with priority remote support and regular physical servicing.',
+        priceFrom: 2999,
+        turnaround: 'Monthly SLA',
+        details: ['24/7 Helpdesk Support', 'Quarterly Maintenance Visits', 'Antivirus Management', 'Standby Spare Parts']
+      }
+    ];
+
+    const PC_PARTS = {
+      cpus: [
+        { name: 'Intel Core i5-13600K (14 Cores)', price: 23999, power: 125 },
+        { name: 'Intel Core i7-14700K (20 Cores)', price: 32999, power: 125 },
+        { name: 'Intel Core i9-14900K (24 Cores)', price: 47999, power: 150 },
+        { name: 'AMD Ryzen 7 7800X3D (3D V-Cache)', price: 33999, power: 120 }
+      ],
+      gpus: [
+        { name: 'NVIDIA RTX 4060 Ti 8GB OC', price: 33999, power: 160 },
+        { name: 'NVIDIA RTX 4070 Super 12GB', price: 52999, power: 220 },
+        { name: 'NVIDIA RTX 4080 Super 16GB', price: 89999, power: 320 },
+        { name: 'AMD Radeon RX 7800 XT 16GB', price: 43999, power: 263 }
+      ],
+      rams: [
+        { name: '16GB DDR5 5600MHz (1x16GB)', price: 4299, power: 10 },
+        { name: '32GB DDR5 6000MHz (2x16GB Corsair)', price: 8999, power: 15 },
+        { name: '64GB DDR5 6400MHz (2x32GB G.Skill)', price: 18999, power: 20 }
+      ],
+      storages: [
+        { name: '1TB Gen4 NVMe M.2 SSD (5000MB/s)', price: 5499, power: 5 },
+        { name: '2TB Samsung 990 PRO NVMe SSD', price: 13999, power: 8 },
+        { name: '4TB Crucial T500 Gen4 M.2 SSD', price: 25999, power: 10 }
+      ]
+    };
+
+    const CATEGORIES = [
+      { id: 'all', label: 'All Catalog', icon: 'fa-boxes-stacked' },
+      { id: 'monitors', label: 'Monitors & Displays', icon: 'fa-desktop' },
+      { id: 'keyboards', label: 'Keyboards & Mice', icon: 'fa-keyboard' },
+      { id: 'storage', label: 'SSDs & Storage', icon: 'fa-hard-drive' },
+      { id: 'computers', label: 'PCs & Laptops', icon: 'fa-laptop' },
+      { id: 'printers', label: 'Printers & Networking', icon: 'fa-network-wired' },
+      { id: 'projectors', label: 'Projectors & Screens', icon: 'fa-video' }
+    ];
+
+    const BRANDS_LIST = ['all', 'Dell', 'HP', 'ASUS', 'Samsung', 'Logitech', 'Corsair', 'Kingston', 'Epson', 'BenQ', 'Lenovo', 'Apple', 'WD', 'Crucial'];
+
+    const CURRENCIES = {
+      INR: { symbol: '₹', rate: 1.0 },
+      USD: { symbol: '$', rate: 0.012 },
+      EUR: { symbol: '€', rate: 0.011 }
+    };
+
+    const NEWS_TICKER = [
+      "🔥 Extra 5% Instant Discount on HDFC Bank Cards!",
+      "⚡ Same-Day Delivery available for local Mumbai/Navi Mumbai orders.",
+      "🛡️ All hardware backed by 100% Genuine Brand Warranty.",
+      "💻 Zero-Cost EMI options available at checkout."
+    ];
+
+    // --- MAIN APP COMPONENT ---
+    function App() {
+      const [currentTab, setCurrentTab] = useState('home');
+      const [currency, setCurrency] = useState('INR');
+      
+      const [products, setProducts] = useState(INITIAL_PRODUCTS);
+      const [cart, setCart] = useState([]);
+      const [wishlist, setWishlist] = useState([]);
+      const [compareList, setCompareList] = useState([]);
+      const [serviceTickets, setServiceTickets] = useState([]);
+      
+      const [isCartOpen, setIsCartOpen] = useState(false);
+      const [isWishlistOpen, setIsWishlistOpen] = useState(false);
+      const [isCompareOpen, setIsCompareOpen] = useState(false);
+      const [selectedProduct, setSelectedProduct] = useState(null);
+      const [emiProduct, setEmiProduct] = useState(null);
+      const [bookingModalService, setBookingModalService] = useState(null);
+      const [isApiGuideOpen, setIsApiGuideOpen] = useState(false);
+      const [searchQuery, setSearchQuery] = useState('');
+      
+      const [selectedCategory, setSelectedCategory] = useState('all');
+      const [selectedBrand, setSelectedBrand] = useState('all');
+      const [maxPrice, setMaxPrice] = useState(350000);
+      const [onlyInStock, setOnlyInStock] = useState(false);
+      const [sortBy, setSortBy] = useState('savings');
+      const [viewMode, setViewMode] = useState('grid');
+
+      const [tickerIdx, setTickerIdx] = useState(0);
+
+      // Rotate Ticker
+      useEffect(() => {
+        const interval = setInterval(() => {
+          setTickerIdx((prev) => (prev + 1) % NEWS_TICKER.length);
+        }, 4000);
+        return () => clearInterval(interval);
+      }, []);
+
+      const [pcBuild, setPcBuild] = useState({
+        cpu: PC_PARTS.cpus[1],
+        gpu: PC_PARTS.gpus[1],
+        ram: PC_PARTS.rams[1],
+        storage: PC_PARTS.storages[1]
+      });
+
+      const formatPrice = (amount) => {
+        const curr = CURRENCIES[currency];
+        const converted = amount * curr.rate;
+        if (currency === 'INR') {
+          return `${curr.symbol}${converted.toLocaleString('en-IN', { maximumFractionDigits: 0 })}`;
+        }
+        return `${curr.symbol}${converted.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+      };
+
+      const addToCart = (product, quantity = 1) => {
+        setCart((prev) => {
+          const existing = prev.find((item) => item.id === product.id);
+          if (existing) {
+            return prev.map((item) =>
+              item.id === product.id ? { ...item, quantity: item.quantity + quantity } : item
+            );
+          }
+          return [...prev, { ...product, quantity }];
+        });
+        setIsCartOpen(true);
+      };
+
+      const updateCartQty = (id, delta) => {
+        setCart((prev) =>
+          prev
+            .map((item) => (item.id === id ? { ...item, quantity: item.quantity + delta } : item))
+            .filter((item) => item.quantity > 0)
+        );
+      };
+
+      const removeFromCart = (id) => {
+        setCart((prev) => prev.filter((item) => item.id !== id));
+      };
+
+      const toggleWishlist = (product) => {
+        setWishlist((prev) => {
+          const exists = prev.some((p) => p.id === product.id);
+          if (exists) return prev.filter((p) => p.id !== product.id);
+          return [...prev, product];
+        });
+      };
+
+      const toggleCompare = (product) => {
+        setCompareList((prev) => {
+          const exists = prev.some((p) => p.id === product.id);
+          if (exists) return prev.filter((p) => p.id !== product.id);
+          if (prev.length >= 3) {
+            alert('You can compare up to 3 products at a time.');
+            return prev;
+          }
+          return [...prev, product];
+        });
+      };
+
+      const filteredProducts = useMemo(() => {
+        return products.filter((p) => {
+          const matchesCategory = selectedCategory === 'all' || p.category === selectedCategory;
+          const matchesBrand = selectedBrand === 'all' || p.brand === selectedBrand;
+          const matchesPrice = p.price <= maxPrice;
+          const matchesStock = !onlyInStock || p.inStock;
+          const matchesSearch =
+            searchQuery.trim() === '' ||
+            p.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            p.brand.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            p.category.toLowerCase().includes(searchQuery.toLowerCase());
+          return matchesCategory && matchesBrand && matchesPrice && matchesStock && matchesSearch;
+        }).sort((a, b) => {
+          if (sortBy === 'savings') return (b.competitorPrice - b.price) - (a.competitorPrice - a.price);
+          if (sortBy === 'price-low') return a.price - b.price;
+          if (sortBy === 'price-high') return b.price - a.price;
+          if (sortBy === 'rating') return b.rating - a.rating;
+          return b.reviewsCount - a.reviewsCount;
+        });
+      }, [products, selectedCategory, selectedBrand, maxPrice, onlyInStock, searchQuery, sortBy]);
+
+      return (
+        <div className="min-h-screen flex flex-col bg-slate-50 text-slate-800">
+          
+          {/* TOP SLEEK UTILITY BAR */}
+          <div className="bg-slate-900 text-slate-200 text-xs py-2 px-4 border-b border-slate-800">
+            <div className="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-2">
+              
+              {/* Animated Live Ticker */}
+              <div className="flex items-center space-x-2 overflow-hidden w-full sm:w-auto">
+                <span className="bg-emerald-500 text-white font-extrabold px-2 py-0.5 rounded text-[10px] uppercase tracking-wide flex-shrink-0">
+                  DEAL ALERT
+                </span>
+                <div className="font-semibold text-slate-300 truncate transition-all duration-500">
+                  {NEWS_TICKER[tickerIdx]}
+                </div>
+              </div>
+
+              {/* Quick Contacts & Actions */}
+              <div className="flex items-center space-x-4 text-slate-300 text-[11px] font-medium">
+                <span className="hidden md:flex items-center gap-1.5 text-emerald-400 font-bold">
+                  <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                  🟢 Open Today | Store Pickup Available
+                </span>
+                
+                <a href="tel:+919820055588" className="hover:text-white flex items-center gap-1">
+                  <i className="fa-solid fa-phone text-brand-500"></i> +91 98200 55588
+                </a>
+
+                <a
+                  href="https://wa.me/919820055588?text=Hello%20Atharva%20Infotech%2C%20I%20want%20to%20get%20the%20lowest%20price%20quote."
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-emerald-400 flex items-center gap-1"
+                >
+                  <i className="fa-brands fa-whatsapp text-emerald-400"></i> WhatsApp
+                </a>
+
+                {/* Currency Dropdown */}
+                <select
+                  value={currency}
+                  onChange={(e) => setCurrency(e.target.value)}
+                  className="bg-slate-800 text-slate-200 text-[11px] font-bold border border-slate-700 rounded px-1.5 py-0.5 focus:outline-none focus:border-brand-500 cursor-pointer"
+                >
+                  <option value="INR">₹ INR</option>
+                  <option value="USD">$ USD</option>
+                  <option value="EUR">€ EUR</option>
+                </select>
+              </div>
+
+            </div>
+          </div>
+
+          {/* MAIN STICKY NAVIGATION */}
+          <header className="sticky top-0 z-40 glass-nav border-b border-slate-200 shadow-sm">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 flex items-center justify-between gap-4">
+              
+              {/* BRAND LOGO */}
+              <div onClick={() => setCurrentTab('home')} className="flex items-center gap-3 cursor-pointer group">
+                <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-600 to-brand-800 flex items-center justify-center text-white text-xl font-black shadow-md group-hover:scale-105 transition-transform">
+                  <i className="fa-solid fa-laptop-code"></i>
+                </div>
+                <div>
+                  <div className="flex items-center gap-2">
+                    <span className="text-xl font-black tracking-tight text-slate-900">
+                      ATHARVA <span className="text-brand-600">INFOTECH</span>
+                    </span>
+                    <span className="hidden sm:inline bg-emerald-100 text-emerald-800 border border-emerald-300 text-[10px] font-black px-1.5 py-0.5 rounded uppercase">
+                      Lowest Price
+                    </span>
+                  </div>
+                  <span className="block text-[10px] text-slate-500 font-bold uppercase tracking-wider">Computers, Accessories & IT Technical Services</span>
+                </div>
+              </div>
+
+              {/* SEARCH BAR WITH LIVE AUTOCOMPLETE */}
+              <div className="hidden lg:flex flex-1 max-w-xl relative">
+                <input
+                  type="text"
+                  placeholder="Search laptops, SSDs, monitors... (Cheaper than Flipkart & Amazon!)"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  onFocus={() => { if (currentTab !== 'shop') setCurrentTab('shop'); }}
+                  className="w-full bg-slate-100 border border-slate-200 rounded-full py-2.5 pl-11 pr-10 text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:border-brand-500 focus:bg-white focus:ring-2 focus:ring-brand-500/20 transition-all"
+                />
+                <i className="fa-solid fa-magnifying-glass absolute left-4 top-3.5 text-slate-400"></i>
+                {searchQuery && (
+                  <button onClick={() => setSearchQuery('')} className="absolute right-3 top-3 text-slate-400 hover:text-slate-600">
+                    <i className="fa-solid fa-xmark"></i>
+                  </button>
+                )}
+              </div>
+
+              {/* ACTION BUTTONS */}
+              <div className="flex items-center space-x-2 sm:space-x-3">
+                
+                {/* Product Comparison Badge */}
+                <button
+                  onClick={() => setIsCompareOpen(true)}
+                  className="relative p-2.5 text-slate-600 hover:text-brand-600 hover:bg-slate-100 rounded-xl transition"
+                  title="Compare Products"
+                >
+                  <i className="fa-solid fa-code-compare text-lg"></i>
+                  {compareList.length > 0 && (
+                    <span className="absolute -top-1 -right-1 bg-brand-600 text-white text-[10px] font-bold rounded-full h-4 w-4 flex items-center justify-center">
+                      {compareList.length}
+                    </span>
+                  )}
+                </button>
+
+                {/* Wishlist Button */}
+                <button
+                  onClick={() => setIsWishlistOpen(true)}
+                  className="relative p-2.5 text-slate-600 hover:text-rose-600 hover:bg-slate-100 rounded-xl transition"
+                  title="Wishlist"
+                >
+                  <i className="fa-regular fa-heart text-lg"></i>
+                  {wishlist.length > 0 && (
+                    <span className="absolute -top-1 -right-1 bg-rose-500 text-white text-[10px] font-bold rounded-full h-4 w-4 flex items-center justify-center">
+                      {wishlist.length}
+                    </span>
+                  )}
+                </button>
+
+                {/* Shopping Cart Button */}
+                <button
+                  onClick={() => setIsCartOpen(true)}
+                  className="relative flex items-center gap-2 bg-brand-600 hover:bg-brand-700 text-white px-4 py-2.5 rounded-xl font-bold text-sm shadow-md transition-all"
+                >
+                  <i className="fa-solid fa-cart-shopping"></i>
+                  <span className="hidden sm:inline">Cart</span>
+                  <span className="bg-white/20 text-white px-2 py-0.5 rounded-md text-xs font-black">
+                    {cart.reduce((sum, i) => sum + i.quantity, 0)}
+                  </span>
+                </button>
+
+              </div>
+            </div>
+
+            {/* TAB NAVIGATION BAR */}
+            <div className="border-t border-slate-200 bg-white">
+              <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between overflow-x-auto text-sm">
+                <nav className="flex space-x-1 sm:space-x-4 py-2 font-semibold whitespace-nowrap">
+                  <button
+                    onClick={() => setCurrentTab('home')}
+                    className={`px-3 py-1.5 rounded-lg transition ${currentTab === 'home' ? 'bg-brand-50 text-brand-600 font-bold' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'}`}
+                  >
+                    <i className="fa-solid fa-house mr-1.5"></i>Home
+                  </button>
+                  <button
+                    onClick={() => setCurrentTab('shop')}
+                    className={`px-3 py-1.5 rounded-lg transition ${currentTab === 'shop' ? 'bg-brand-50 text-brand-600 font-bold' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'}`}
+                  >
+                    <i className="fa-solid fa-store mr-1.5"></i>Hardware Store
+                  </button>
+                  <button
+                    onClick={() => setCurrentTab('services')}
+                    className={`px-3 py-1.5 rounded-lg transition ${currentTab === 'services' ? 'bg-brand-50 text-brand-600 font-bold' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'}`}
+                  >
+                    <i className="fa-solid fa-wrench mr-1.5"></i>IT Technical Services
+                  </button>
+                  <button
+                    onClick={() => setCurrentTab('builder')}
+                    className={`px-3 py-1.5 rounded-lg transition ${currentTab === 'builder' ? 'bg-brand-50 text-brand-600 font-bold' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'}`}
+                  >
+                    <i className="fa-solid fa-screwdriver-wrench mr-1.5 text-brand-600"></i>Custom PC Rig Builder
+                  </button>
+                  <button
+                    onClick={() => setCurrentTab('tracking')}
+                    className={`px-3 py-1.5 rounded-lg transition ${currentTab === 'tracking' ? 'bg-brand-50 text-brand-600 font-bold' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'}`}
+                  >
+                    <i className="fa-solid fa-truck-fast mr-1.5"></i>Track Ticket / Order
+                  </button>
+                  <button
+                    onClick={() => setCurrentTab('admin')}
+                    className={`px-3 py-1.5 rounded-lg transition ${currentTab === 'admin' ? 'bg-brand-50 text-brand-600 font-bold' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'}`}
+                  >
+                    <i className="fa-solid fa-gauge-high mr-1.5"></i>Control Center
+                  </button>
+                </nav>
+
+                <div className="hidden xl:flex items-center text-xs font-bold text-emerald-700 gap-2 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-200">
+                  <i className="fa-solid fa-shield-check"></i> Price Match Guarantee Active
+                </div>
+              </div>
+            </div>
+          </header>
+
+          {/* MAIN CONTAINER CONTENT */}
+          <main className="flex-1">
+            {currentTab === 'home' && (
+              <HomeView
+                products={products}
+                onSelectCategory={(cat) => { setSelectedCategory(cat); setCurrentTab('shop'); }}
+                onOpenProduct={(prod) => setSelectedProduct(prod)}
+                onAddToCart={addToCart}
+                onToggleWishlist={toggleWishlist}
+                onToggleCompare={toggleCompare}
+                wishlist={wishlist}
+                compareList={compareList}
+                onNavigate={(tab) => setCurrentTab(tab)}
+                onBookService={(srv) => setBookingModalService(srv)}
+                onOpenEmi={(prod) => setEmiProduct(prod)}
+                formatPrice={formatPrice}
+              />
+            )}
+
+            {currentTab === 'shop' && (
+              <ShopView
+                products={filteredProducts}
+                selectedCategory={selectedCategory}
+                setSelectedCategory={setSelectedCategory}
+                selectedBrand={selectedBrand}
+                setSelectedBrand={setSelectedBrand}
+                maxPrice={maxPrice}
+                setMaxPrice={setMaxPrice}
+                onlyInStock={onlyInStock}
+                setOnlyInStock={setOnlyInStock}
+                sortBy={sortBy}
+                setSortBy={setSortBy}
+                viewMode={viewMode}
+                setViewMode={setViewMode}
+                onOpenProduct={(prod) => setSelectedProduct(prod)}
+                onAddToCart={addToCart}
+                onToggleWishlist={toggleWishlist}
+                onToggleCompare={toggleCompare}
+                wishlist={wishlist}
+                compareList={compareList}
+                onOpenEmi={(prod) => setEmiProduct(prod)}
+                formatPrice={formatPrice}
+              />
+            )}
+
+            {currentTab === 'services' && (
+              <ServicesView
+                services={IT_SERVICES}
+                onBookService={(srv) => setBookingModalService(srv)}
+                formatPrice={formatPrice}
+              />
+            )}
+
+            {currentTab === 'builder' && (
+              <PcBuilderView
+                pcBuild={pcBuild}
+                setPcBuild={setPcBuild}
+                onAddToCart={addToCart}
+                formatPrice={formatPrice}
+              />
+            )}
+
+            {currentTab === 'tracking' && (
+              <TrackingView serviceTickets={serviceTickets} />
+            )}
+
+            {currentTab === 'admin' && (
+              <AdminView
+                products={products}
+                setProducts={setProducts}
+                serviceTickets={serviceTickets}
+                onOpenApiGuide={() => setIsApiGuideOpen(true)}
+                formatPrice={formatPrice}
+              />
+            )}
+          </main>
+
+          {/* FOOTER */}
+          <footer className="bg-white border-t border-slate-200 text-slate-600 pt-12 pb-8 mt-16 shadow-inner">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 pb-10 border-b border-slate-200">
+              <div className="lg:col-span-2 space-y-4">
+                <div className="flex items-center gap-2">
+                  <div className="w-8 h-8 rounded-lg bg-brand-600 flex items-center justify-center text-white text-base font-bold">
+                    <i className="fa-solid fa-laptop-code"></i>
+                  </div>
+                  <span className="text-xl font-bold text-slate-900 tracking-wide">Atharva Infotech</span>
+                </div>
+                <p className="text-sm text-slate-600 leading-relaxed max-w-sm">
+                  Your primary destination for direct wholesale IT products and technical services. Guaranteed lower rates than Flipkart, Amazon, and retail storefronts.
+                </p>
+                <div className="flex space-x-3">
+                  <a href="#" className="w-9 h-9 rounded-lg bg-slate-100 flex items-center justify-center hover:bg-brand-600 hover:text-white transition"><i className="fa-brands fa-facebook-f"></i></a>
+                  <a href="#" className="w-9 h-9 rounded-lg bg-slate-100 flex items-center justify-center hover:bg-brand-600 hover:text-white transition"><i className="fa-brands fa-instagram"></i></a>
+                  <a href="#" className="w-9 h-9 rounded-lg bg-slate-100 flex items-center justify-center hover:bg-brand-600 hover:text-white transition"><i className="fa-brands fa-linkedin-in"></i></a>
+                </div>
+              </div>
+
+              <div>
+                <h4 className="text-slate-900 font-bold text-xs uppercase tracking-wider mb-4">Hardware Categories</h4>
+                <ul className="space-y-2.5 text-sm">
+                  <li><button onClick={() => { setSelectedCategory('monitors'); setCurrentTab('shop'); }} className="hover:text-brand-600">Monitors & Displays</button></li>
+                  <li><button onClick={() => { setSelectedCategory('keyboards'); setCurrentTab('shop'); }} className="hover:text-brand-600">Keyboards & Mice</button></li>
+                  <li><button onClick={() => { setSelectedCategory('storage'); setCurrentTab('shop'); }} className="hover:text-brand-600">SSDs, HDDs & RAM</button></li>
+                  <li><button onClick={() => { setSelectedCategory('computers'); setCurrentTab('shop'); }} className="hover:text-brand-600">PCs & Laptops</button></li>
+                  <li><button onClick={() => { setSelectedCategory('printers'); setCurrentTab('shop'); }} className="hover:text-brand-600">Printers & Networking</button></li>
+                </ul>
+              </div>
+
+              <div>
+                <h4 className="text-slate-900 font-bold text-xs uppercase tracking-wider mb-4">Technical Services</h4>
+                <ul className="space-y-2.5 text-sm">
+                  <li><button onClick={() => setCurrentTab('services')} className="hover:text-brand-600">Laptop Repair & Chip Fixing</button></li>
+                  <li><button onClick={() => setCurrentTab('services')} className="hover:text-brand-600">M.2 SSD Data Cloning</button></li>
+                  <li><button onClick={() => setCurrentTab('services')} className="hover:text-brand-600">Hard Drive Data Recovery</button></li>
+                  <li><button onClick={() => setCurrentTab('services')} className="hover:text-brand-600">Office Mesh Wi-Fi Setup</button></li>
+                  <li><button onClick={() => setCurrentTab('services')} className="hover:text-brand-600">Corporate AMC Contracts</button></li>
+                </ul>
+              </div>
+
+              <div>
+                <h4 className="text-slate-900 font-bold text-xs uppercase tracking-wider mb-4">Store Hub</h4>
+                <ul className="space-y-3 text-sm">
+                  <li className="flex items-start gap-2.5">
+                    <i className="fa-solid fa-location-dot mt-1 text-brand-600"></i>
+                    <span>Atharva Infotech Plaza, Commercial Sector 18, City Hub</span>
+                  </li>
+                  <li className="flex items-center gap-2.5">
+                    <i className="fa-solid fa-phone text-brand-600"></i>
+                    <span>+91 98200 55588 / 022-25001122</span>
+                  </li>
+                  <li className="flex items-center gap-2.5">
+                    <i className="fa-solid fa-envelope text-brand-600"></i>
+                    <span>sales@atharvainfotech.com</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 flex flex-col md:flex-row justify-between items-center text-xs text-slate-500 gap-4">
+              <p>© 2026 Atharva Infotech. All brand trademarks belong to their respective authorized owners.</p>
+              <div className="flex space-x-4 font-semibold">
+                <span className="hover:underline cursor-pointer">Lowest Price Guarantee</span>
+                <span className="hover:underline cursor-pointer">Brand Warranty Terms</span>
+                <span className="hover:underline cursor-pointer">Wholesale Enquiries</span>
+              </div>
+            </div>
+          </footer>
+
+          {/* FLOATING WHATSAPP BUTTON */}
+          <a
+            href="https://wa.me/919820055588?text=Hello%20Atharva%20Infotech%2C%20I%20would%20like%20to%20get%20the%20lowest%20price%20quote."
+            target="_blank"
+            rel="noopener noreferrer"
+            className="fixed bottom-6 right-6 bg-emerald-500 hover:bg-emerald-600 text-white rounded-full p-4 shadow-xl z-40 flex items-center justify-center text-2xl transition-transform hover:scale-110"
+            title="Get Quick Quote on WhatsApp"
+          >
+            <i className="fa-brands fa-whatsapp"></i>
+          </a>
+
+          {/* DRAWERS & MODALS */}
+          {isCartOpen && (
+            <CartDrawer
+              cart={cart}
+              onClose={() => setIsCartOpen(false)}
+              onUpdateQty={updateCartQty}
+              onRemove={removeFromCart}
+              formatPrice={formatPrice}
+            />
+          )}
+
+          {isWishlistOpen && (
+            <WishlistDrawer
+              wishlist={wishlist}
+              onClose={() => setIsWishlistOpen(false)}
+              onAddToCart={addToCart}
+              onRemove={toggleWishlist}
+              formatPrice={formatPrice}
+            />
+          )}
+
+          {isCompareOpen && (
+            <CompareModal
+              compareList={compareList}
+              onClose={() => setIsCompareOpen(false)}
+              onRemoveFromCompare={toggleCompare}
+              onAddToCart={addToCart}
+              formatPrice={formatPrice}
+            />
+          )}
+
+          {selectedProduct && (
+            <ProductDetailModal
+              product={selectedProduct}
+              onClose={() => setSelectedProduct(null)}
+              onAddToCart={addToCart}
+              onToggleWishlist={toggleWishlist}
+              isWishlisted={wishlist.some((p) => p.id === selectedProduct.id)}
+              onOpenEmi={setEmiProduct}
+              formatPrice={formatPrice}
+            />
+          )}
+
+          {emiProduct && (
+            <EmiCalculatorModal
+              product={emiProduct}
+              onClose={() => setEmiProduct(null)}
+              formatPrice={formatPrice}
+            />
+          )}
+
+          {bookingModalService && (
+            <ServiceBookingModal
+              service={bookingModalService}
+              onClose={() => setBookingModalService(null)}
+              onSuccess={(ticket) => {
+                setServiceTickets((prev) => [ticket, ...prev]);
+                setBookingModalService(null);
+                setCurrentTab('tracking');
+              }}
+            />
+          )}
+
+          {isApiGuideOpen && (
+            <ApiGuideModal onClose={() => setIsApiGuideOpen(false)} />
+          )}
+
+        </div>
+      );
+    }
+
+    // --- HOME VIEW ---
+    function HomeView({ products, onSelectCategory, onOpenProduct, onAddToCart, onToggleWishlist, onToggleCompare, wishlist, compareList, onNavigate, onBookService, onOpenEmi, formatPrice }) {
+      const trending = products.filter((p) => p.isTrending);
+
+      return (
+        <div className="space-y-16">
+          
+          {/* HERO BANNER SECTION */}
+          <section className="relative bg-gradient-to-b from-brand-50/80 via-white to-slate-50 pt-10 pb-16 border-b border-slate-200">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+              
+              <div className="lg:col-span-7 space-y-6 text-center lg:text-left">
+                <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-emerald-100 border border-emerald-300 text-emerald-800 text-xs font-bold shadow-sm">
+                  <i className="fa-solid fa-shield-check"></i> Wholesale Sourcing • Cheaper Than Flipkart & Amazon
+                </div>
+                
+                <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-slate-900 tracking-tight leading-tight">
+                  Guaranteed Lowest Rates On <br />
+                  <span className="text-brand-600">
+                    IT Hardware & Accessories
+                  </span>
+                </h1>
+                
+                <p className="text-slate-600 text-base sm:text-lg max-w-xl mx-auto lg:mx-0 leading-relaxed">
+                  Welcome to <strong>Atharva Infotech</strong>. Eliminate middleman markups! Purchase genuine laptops, SSDs, monitors, and networking gear direct from authorized distributors.
+                </p>
+
+                {/* TRUST BADGES ROW */}
+                <div className="grid grid-cols-3 gap-3 max-w-md mx-auto lg:mx-0 pt-2 text-left">
+                  <div className="bg-white p-3 rounded-xl border border-slate-200 shadow-sm flex items-center gap-2.5">
+                    <i className="fa-solid fa-tag text-emerald-600 text-lg"></i>
+                    <div>
+                      <div className="text-xs font-bold text-slate-900">Direct Pricing</div>
+                      <div className="text-[10px] text-slate-500">No Marketplace Cut</div>
+                    </div>
+                  </div>
+                  <div className="bg-white p-3 rounded-xl border border-slate-200 shadow-sm flex items-center gap-2.5">
+                    <i className="fa-solid fa-truck-fast text-brand-600 text-lg"></i>
+                    <div>
+                      <div className="text-xs font-bold text-slate-900">Fast Dispatch</div>
+                      <div className="text-[10px] text-slate-500">Same Day Delivery</div>
+                    </div>
+                  </div>
+                  <div className="bg-white p-3 rounded-xl border border-slate-200 shadow-sm flex items-center gap-2.5">
+                    <i className="fa-solid fa-award text-amber-500 text-lg"></i>
+                    <div>
+                      <div className="text-xs font-bold text-slate-900">100% Genuine</div>
+                      <div className="text-[10px] text-slate-500">Brand Warranty</div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start pt-2">
+                  <button
+                    onClick={() => onNavigate('shop')}
+                    className="bg-brand-600 hover:bg-brand-700 text-white font-bold px-8 py-3.5 rounded-xl shadow-lg transition-all flex items-center justify-center gap-2 text-sm"
+                  >
+                    <i className="fa-solid fa-cart-shopping"></i> Explore Catalog
+                  </button>
+                  <button
+                    onClick={() => onNavigate('services')}
+                    className="bg-white hover:bg-slate-100 text-slate-800 font-bold px-8 py-3.5 rounded-xl border border-slate-300 transition flex items-center justify-center gap-2 text-sm shadow-sm"
+                  >
+                    <i className="fa-solid fa-wrench text-brand-600"></i> IT Repair Services
+                  </button>
+                </div>
+              </div>
+
+              {/* HERO FEATURED PRODUCT CARD */}
+              <div className="lg:col-span-5 flex justify-center">
+                <div className="relative w-full max-w-md bg-white border border-slate-200 rounded-2xl p-5 shadow-xl hover-glow transition">
+                  <div className="absolute -top-3 -right-3 bg-emerald-600 text-white text-xs font-black px-3 py-1 rounded-full uppercase tracking-wider shadow">
+                    Top Deal
+                  </div>
+                  <div className="aspect-video w-full rounded-xl overflow-hidden bg-slate-100 mb-4 relative cursor-pointer" onClick={() => onOpenProduct(products[0])}>
+                    <img
+                      src={products[0].image}
+                      alt={products[0].name}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                  <div className="space-y-3">
+                    <span className="text-xs font-bold text-brand-600 uppercase">{products[0].brand}</span>
+                    <h3 className="text-base font-bold text-slate-900 line-clamp-1 cursor-pointer hover:text-brand-600" onClick={() => onOpenProduct(products[0])}>
+                      {products[0].name}
+                    </h3>
+                    
+                    {/* Price Comparison Block */}
+                    <div className="bg-slate-50 p-3 rounded-xl border border-slate-200 space-y-1">
+                      <div className="flex justify-between items-center text-xs">
+                        <span className="text-slate-500">Market Price ({products[0].competitorName}):</span>
+                        <span className="text-slate-400 line-through">{formatPrice(products[0].competitorPrice)}</span>
+                      </div>
+                      <div className="flex justify-between items-center">
+                        <span className="text-xs font-extrabold text-slate-800">Atharva Direct Price:</span>
+                        <span className="text-xl font-black text-emerald-600">{formatPrice(products[0].price)}</span>
+                      </div>
+                      <div className="text-[11px] font-bold text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded text-right">
+                        Instant Savings: {formatPrice(products[0].competitorPrice - products[0].price)}
+                      </div>
+                    </div>
+
+                    <div className="flex gap-2">
+                      <button
+                        onClick={() => onAddToCart(products[0])}
+                        className="flex-1 bg-brand-600 hover:bg-brand-700 text-white text-xs font-bold py-2.5 rounded-lg transition flex items-center justify-center gap-2"
+                      >
+                        <i className="fa-solid fa-cart-plus"></i> Add to Cart
+                      </button>
+                      <button
+                        onClick={() => onOpenEmi(products[0])}
+                        className="bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold px-3 py-2.5 rounded-lg border border-slate-300"
+                      >
+                        EMI Calculator
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </section>
+
+          {/* CATEGORIES GRID */}
+          <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="flex justify-between items-end mb-8">
+              <div>
+                <h2 className="text-2xl font-black text-slate-900 tracking-tight">Browse Product Categories</h2>
+                <p className="text-slate-500 text-sm">Direct wholesale rates across all hardware divisions</p>
+              </div>
+              <button onClick={() => onNavigate('shop')} className="text-sm text-brand-600 hover:underline font-bold flex items-center gap-1">
+                View Full Catalog <i className="fa-solid fa-arrow-right text-xs"></i>
+              </button>
+            </div>
+
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
+              {CATEGORIES.filter((c) => c.id !== 'all').map((cat) => (
+                <div
+                  key={cat.id}
+                  onClick={() => onSelectCategory(cat.id)}
+                  className="bg-white hover:bg-slate-50 border border-slate-200 hover:border-brand-500 rounded-2xl p-5 text-center cursor-pointer transition shadow-sm hover-glow flex flex-col items-center justify-center space-y-3"
+                >
+                  <div className="w-12 h-12 rounded-xl bg-brand-50 text-brand-600 flex items-center justify-center text-xl">
+                    <i className={`fa-solid ${cat.icon}`}></i>
+                  </div>
+                  <span className="text-xs font-bold text-slate-800">{cat.label}</span>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          {/* BEST SELLERS & PRICE COMPARISON CARDS */}
+          <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="flex justify-between items-end mb-8">
+              <div>
+                <h2 className="text-2xl font-black text-slate-900 tracking-tight">Trending IT Products</h2>
+                <p className="text-slate-500 text-sm">Real market prices compared against Flipkart & Amazon</p>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              {trending.slice(0, 8).map((product) => (
+                <ProductCard
+                  key={product.id}
+                  product={product}
+                  onOpen={() => onOpenProduct(product)}
+                  onAddToCart={onAddToCart}
+                  onToggleWishlist={onToggleWishlist}
+                  onToggleCompare={onToggleCompare}
+                  isWishlisted={wishlist.some((p) => p.id === product.id)}
+                  isCompared={compareList.some((p) => p.id === product.id)}
+                  onOpenEmi={() => onOpenEmi(product)}
+                  formatPrice={formatPrice}
+                />
+              ))}
+            </div>
+          </section>
+
+          {/* IT TECHNICAL SERVICES CALLOUT */}
+          <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 bg-gradient-to-r from-slate-900 to-slate-800 rounded-3xl p-8 sm:p-12 text-white">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+              <div className="lg:col-span-5 space-y-4">
+                <span className="text-xs font-bold uppercase tracking-wider text-emerald-400">Expert Support</span>
+                <h2 className="text-3xl font-extrabold text-white">Computer Repairs, Data Recovery & AMC</h2>
+                <p className="text-slate-300 text-sm leading-relaxed">
+                  Atharva Infotech technicians handle motherboard fixing, high-speed SSD cloning, office mesh network wiring, and corporate AMC management.
+                </p>
+                <button
+                  onClick={() => onNavigate('services')}
+                  className="mt-4 bg-brand-600 hover:bg-brand-500 text-white font-bold px-6 py-3 rounded-xl transition text-sm flex items-center gap-2 shadow-md"
+                >
+                  <i className="fa-solid fa-wrench"></i> View IT Technical Services
+                </button>
+              </div>
+
+              <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-4 text-slate-800">
+                {IT_SERVICES.slice(0, 4).map((srv) => (
+                  <div key={srv.id} className="bg-white rounded-2xl p-5 space-y-3 shadow-md">
+                    <div className="w-10 h-10 rounded-xl bg-brand-50 text-brand-600 flex items-center justify-center text-lg font-bold">
+                      <i className={`fa-solid ${srv.icon}`}></i>
+                    </div>
+                    <h3 className="text-base font-bold text-slate-900">{srv.title}</h3>
+                    <p className="text-xs text-slate-500 line-clamp-2">{srv.shortDesc}</p>
+                    <div className="flex items-center justify-between pt-2 border-t border-slate-100">
+                      <span className="text-xs font-bold text-slate-700">From {formatPrice(srv.priceFrom)}</span>
+                      <button
+                        onClick={() => onBookService(srv)}
+                        className="text-xs text-brand-600 hover:underline font-bold"
+                      >
+                        Book Ticket →
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+
+        </div>
+      );
+    }
+
+    // --- SHOP CATALOG VIEW ---
+    function ShopView({
+      products,
+      selectedCategory,
+      setSelectedCategory,
+      selectedBrand,
+      setSelectedBrand,
+      maxPrice,
+      setMaxPrice,
+      onlyInStock,
+      setOnlyInStock,
+      sortBy,
+      setSortBy,
+      viewMode,
+      setViewMode,
+      onOpenProduct,
+      onAddToCart,
+      onToggleWishlist,
+      onToggleCompare,
+      wishlist,
+      compareList,
+      onOpenEmi,
+      formatPrice
+    }) {
+      return (
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          
+          <div className="mb-8">
+            <h1 className="text-3xl font-black text-slate-900">Hardware & Accessories Catalog</h1>
+            <p className="text-slate-500 text-sm">Direct wholesale rates guaranteed lower than Flipkart & Amazon.</p>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+            
+            {/* SIDEBAR FILTERS */}
+            <div className="bg-white border border-slate-200 rounded-2xl p-5 space-y-6 h-fit shadow-sm">
+              <div className="flex items-center justify-between border-b border-slate-100 pb-3">
+                <h3 className="font-bold text-slate-900 flex items-center gap-2">
+                  <i className="fa-solid fa-filter text-brand-600 text-xs"></i> Filter Products
+                </h3>
+                <button
+                  onClick={() => {
+                    setSelectedCategory('all');
+                    setSelectedBrand('all');
+                    setMaxPrice(350000);
+                    setOnlyInStock(false);
+                  }}
+                  className="text-xs text-slate-500 hover:text-slate-900"
+                >
+                  Reset
+                </button>
+              </div>
+
+              {/* Category Filter */}
+              <div className="space-y-2">
+                <label className="text-xs font-bold text-slate-500 uppercase tracking-wider block">Category</label>
+                <div className="space-y-1">
+                  {CATEGORIES.map((cat) => (
+                    <button
+                      key={cat.id}
+                      onClick={() => setSelectedCategory(cat.id)}
+                      className={`w-full text-left px-3 py-2 rounded-lg text-xs font-semibold flex items-center justify-between transition ${selectedCategory === cat.id ? 'bg-brand-50 text-brand-600 font-bold' : 'text-slate-600 hover:bg-slate-100'}`}
+                    >
+                      <span>{cat.label}</span>
+                      <i className={`fa-solid ${cat.icon} text-xs opacity-60`}></i>
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Brand Filter */}
+              <div className="space-y-2 border-t border-slate-100 pt-4">
+                <label className="text-xs font-bold text-slate-500 uppercase tracking-wider block">Manufacturer Brand</label>
+                <select
+                  value={selectedBrand}
+                  onChange={(e) => setSelectedBrand(e.target.value)}
+                  className="w-full bg-slate-50 border border-slate-200 rounded-lg py-2 px-3 text-xs text-slate-800 focus:outline-none focus:border-brand-500 font-medium"
+                >
+                  {BRANDS_LIST.map((b) => (
+                    <option key={b} value={b}>{b === 'all' ? 'All Brands' : b}</option>
+                  ))}
+                </select>
+              </div>
+
+              {/* Price Slider */}
+              <div className="space-y-2 border-t border-slate-100 pt-4">
+                <div className="flex justify-between text-xs">
+                  <span className="font-bold text-slate-500 uppercase tracking-wider">Max Price</span>
+                  <span className="text-brand-600 font-bold">{formatPrice(maxPrice)}</span>
+                </div>
+                <input
+                  type="range"
+                  min="1000"
+                  max="350000"
+                  step="2000"
+                  value={maxPrice}
+                  onChange={(e) => setMaxPrice(Number(e.target.value))}
+                  className="w-full accent-brand-600 bg-slate-200 rounded-lg cursor-pointer"
+                />
+              </div>
+
+              {/* In-Stock Only */}
+              <div className="border-t border-slate-100 pt-4">
+                <label className="flex items-center space-x-2 text-xs font-semibold text-slate-700 cursor-pointer">
+                  <input
+                    type="checkbox"
+                    checked={onlyInStock}
+                    onChange={(e) => setOnlyInStock(e.target.checked)}
+                    className="accent-brand-600 rounded"
+                  />
+                  <span>Show In-Stock Only</span>
+                </label>
+              </div>
+            </div>
+
+            {/* CATALOG LIST */}
+            <div className="lg:col-span-3 space-y-6">
+              
+              <div className="bg-white border border-slate-200 rounded-xl p-3 flex flex-col sm:flex-row justify-between items-center gap-4 shadow-sm">
+                <div className="text-xs text-slate-500">
+                  Showing <strong className="text-slate-900">{products.length}</strong> items
+                </div>
+
+                <div className="flex items-center space-x-4">
+                  <div className="flex items-center space-x-2 text-xs">
+                    <span className="text-slate-500 font-medium">Sort By:</span>
+                    <select
+                      value={sortBy}
+                      onChange={(e) => setSortBy(e.target.value)}
+                      className="bg-slate-50 border border-slate-200 rounded-lg py-1.5 px-3 text-xs text-slate-800 focus:outline-none focus:border-brand-500 font-semibold"
+                    >
+                      <option value="savings">Highest Discount Savings</option>
+                      <option value="price-low">Price: Low to High</option>
+                      <option value="price-high">Price: High to Low</option>
+                      <option value="rating">Highest Rated</option>
+                    </select>
+                  </div>
+
+                  <div className="flex bg-slate-100 p-1 rounded-lg border border-slate-200">
+                    <button
+                      onClick={() => setViewMode('grid')}
+                      className={`p-1.5 rounded text-xs transition ${viewMode === 'grid' ? 'bg-white text-brand-600 shadow-sm font-bold' : 'text-slate-500 hover:text-slate-900'}`}
+                    >
+                      <i className="fa-solid fa-border-all"></i>
+                    </button>
+                    <button
+                      onClick={() => setViewMode('list')}
+                      className={`p-1.5 rounded text-xs transition ${viewMode === 'list' ? 'bg-white text-brand-600 shadow-sm font-bold' : 'text-slate-500 hover:text-slate-900'}`}
+                    >
+                      <i className="fa-solid fa-list"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              {products.length === 0 ? (
+                <div className="text-center py-16 bg-white rounded-2xl border border-slate-200 space-y-3 shadow-sm">
+                  <i className="fa-solid fa-box-open text-4xl text-slate-300"></i>
+                  <h3 className="text-lg font-bold text-slate-800">No matching hardware products found</h3>
+                  <p className="text-xs text-slate-500">Try adjusting your price filter or selecting another brand.</p>
+                </div>
+              ) : viewMode === 'grid' ? (
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {products.map((product) => (
+                    <ProductCard
+                      key={product.id}
+                      product={product}
+                      onOpen={() => onOpenProduct(product)}
+                      onAddToCart={onAddToCart}
+                      onToggleWishlist={onToggleWishlist}
+                      onToggleCompare={onToggleCompare}
+                      isWishlisted={wishlist.some((p) => p.id === product.id)}
+                      isCompared={compareList.some((p) => p.id === product.id)}
+                      onOpenEmi={() => onOpenEmi(product)}
+                      formatPrice={formatPrice}
+                    />
+                  ))}
+                </div>
+              ) : (
+                <div className="space-y-4">
+                  {products.map((product) => (
+                    <ProductListItem
+                      key={product.id}
+                      product={product}
+                      onOpen={() => onOpenProduct(product)}
+                      onAddToCart={onAddToCart}
+                      onToggleWishlist={onToggleWishlist}
+                      onToggleCompare={onToggleCompare}
+                      isWishlisted={wishlist.some((p) => p.id === product.id)}
+                      isCompared={compareList.some((p) => p.id === product.id)}
+                      formatPrice={formatPrice}
+                    />
+                  ))}
+                </div>
+              )}
+
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    // --- REUSABLE PRODUCT CARD ---
+    function ProductCard({ product, onOpen, onAddToCart, onToggleWishlist, onToggleCompare, isWishlisted, isCompared, onOpenEmi, formatPrice }) {
+      const savings = product.competitorPrice - product.price;
+
+      return (
+        <div className="bg-white border border-slate-200 hover:border-brand-500/50 rounded-2xl p-4 flex flex-col justify-between transition-all duration-300 shadow-sm hover-glow group">
+          <div>
+            <div className="relative aspect-square w-full rounded-xl overflow-hidden bg-slate-100 mb-3 cursor-pointer" onClick={onOpen}>
+              <img
+                src={product.image}
+                alt={product.name}
+                loading="lazy"
+                onError={(e) => {
+                  e.target.src = 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&auto=format&fit=crop&q=80';
+                }}
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+              />
+              
+              <div className="absolute top-2 right-2 flex flex-col gap-1.5">
+                <button
+                  onClick={(e) => { e.stopPropagation(); onToggleWishlist(product); }}
+                  className={`w-8 h-8 rounded-full flex items-center justify-center text-xs shadow-md transition ${isWishlisted ? 'bg-rose-500 text-white' : 'bg-white/90 text-slate-600 hover:text-rose-500'}`}
+                  title="Save to Wishlist"
+                >
+                  <i className="fa-solid fa-heart"></i>
+                </button>
+                <button
+                  onClick={(e) => { e.stopPropagation(); onToggleCompare(product); }}
+                  className={`w-8 h-8 rounded-full flex items-center justify-center text-xs shadow-md transition ${isCompared ? 'bg-brand-600 text-white' : 'bg-white/90 text-slate-600 hover:text-brand-600'}`}
+                  title="Compare Product"
+                >
+                  <i className="fa-solid fa-code-compare"></i>
+                </button>
+              </div>
+
+              <span className="absolute bottom-2 left-2 bg-slate-900/80 text-white text-[10px] font-bold px-2 py-0.5 rounded">
+                {product.brand}
+              </span>
+            </div>
+
+            <div className="space-y-2">
+              <div className="flex items-center gap-1 text-amber-500 text-xs">
+                <i className="fa-solid fa-star"></i>
+                <span className="font-bold text-slate-800">{product.rating}</span>
+                <span className="text-slate-400 text-[10px]">({product.reviewsCount})</span>
+              </div>
+
+              <h3 onClick={onOpen} className="text-sm font-bold text-slate-900 line-clamp-2 cursor-pointer hover:text-brand-600 transition">
+                {product.name}
+              </h3>
+
+              {/* Price comparison box */}
+              <div className="bg-slate-50 border border-slate-200 rounded-xl p-2.5 space-y-1">
+                <div className="flex justify-between items-center text-[11px] text-slate-500">
+                  <span>{product.competitorName} Price:</span>
+                  <span className="line-through">{formatPrice(product.competitorPrice)}</span>
+                </div>
+                <div className="flex justify-between items-baseline">
+                  <span className="text-xs font-bold text-slate-800">Atharva Rate:</span>
+                  <span className="text-base font-black text-emerald-600">{formatPrice(product.price)}</span>
+                </div>
+                <div className="text-[10px] font-extrabold text-emerald-700 bg-emerald-100 px-1.5 py-0.5 rounded text-center">
+                  You Save: {formatPrice(savings)}!
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="pt-3 mt-3 border-t border-slate-100 flex items-center justify-between gap-2">
+            <button
+              onClick={onOpenEmi}
+              className="text-[10px] font-bold text-brand-600 bg-brand-50 px-2 py-1.5 rounded-lg hover:bg-brand-100"
+            >
+              EMI Calc
+            </button>
+
+            <button
+              onClick={() => onAddToCart(product)}
+              className="bg-brand-600 hover:bg-brand-700 text-white px-3.5 py-2 rounded-xl text-xs font-bold flex items-center gap-1.5 transition shadow-sm"
+            >
+              <i className="fa-solid fa-cart-plus"></i> Add
+            </button>
+          </div>
+        </div>
+      );
+    }
+
+    // --- REUSABLE PRODUCT LIST ITEM ---
+    function ProductListItem({ product, onOpen, onAddToCart, onToggleWishlist, onToggleCompare, isWishlisted, isCompared, formatPrice }) {
+      const savings = product.competitorPrice - product.price;
+
+      return (
+        <div className="bg-white border border-slate-200 hover:border-slate-300 rounded-2xl p-4 flex flex-col sm:flex-row items-center gap-5 transition shadow-sm">
+          <div className="w-full sm:w-36 h-36 rounded-xl overflow-hidden bg-slate-100 flex-shrink-0 cursor-pointer" onClick={onOpen}>
+            <img src={product.image} alt={product.name} className="w-full h-full object-cover" />
+          </div>
+
+          <div className="flex-1 space-y-2">
+            <div className="flex items-center gap-2">
+              <span className="text-xs text-brand-600 font-bold uppercase">{product.brand}</span>
+              <span className="text-xs text-emerald-600 font-semibold">• Ready for Dispatch</span>
+            </div>
+            <h3 onClick={onOpen} className="text-base font-bold text-slate-900 cursor-pointer hover:text-brand-600">
+              {product.name}
+            </h3>
+            <p className="text-xs text-slate-500 line-clamp-2">{product.description}</p>
+            
+            <div className="flex flex-wrap gap-1.5 pt-1">
+              {Object.entries(product.specs).map(([k, v]) => (
+                <span key={k} className="text-[10px] bg-slate-100 text-slate-600 px-2 py-0.5 rounded border border-slate-200">
+                  {k}: {v}
+                </span>
+              ))}
+            </div>
+          </div>
+
+          <div className="w-full sm:w-auto border-t sm:border-t-0 sm:border-l border-slate-100 pt-3 sm:pt-0 sm:pl-5 flex sm:flex-col items-center sm:items-end justify-between gap-3">
+            <div className="sm:text-right space-y-1">
+              <div className="text-xs text-slate-400 line-through">{product.competitorName}: {formatPrice(product.competitorPrice)}</div>
+              <div className="text-xl font-black text-emerald-600">{formatPrice(product.price)}</div>
+              <div className="text-[10px] font-bold text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded inline-block">
+                Save {formatPrice(savings)}
+              </div>
+            </div>
+
+            <div className="flex space-x-2">
+              <button
+                onClick={() => onToggleCompare(product)}
+                className={`p-2 rounded-xl text-xs border ${isCompared ? 'bg-brand-600 text-white' : 'border-slate-200 text-slate-600'}`}
+                title="Compare"
+              >
+                <i className="fa-solid fa-code-compare"></i>
+              </button>
+              <button
+                onClick={() => onToggleWishlist(product)}
+                className={`p-2 rounded-xl text-xs border ${isWishlisted ? 'bg-rose-500 text-white' : 'border-slate-200 text-slate-600'}`}
+              >
+                <i className="fa-solid fa-heart"></i>
+              </button>
+              <button
+                onClick={() => onAddToCart(product)}
+                className="bg-brand-600 hover:bg-brand-700 text-white px-4 py-2 rounded-xl text-xs font-bold flex items-center gap-1.5 shadow-sm"
+              >
+                <i className="fa-solid fa-cart-plus"></i> Add
+              </button>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    // --- IT TECHNICAL SERVICES VIEW ---
+    function ServicesView({ services, onBookService, formatPrice }) {
+      return (
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-12">
+          <div className="text-center max-w-2xl mx-auto space-y-3">
+            <span className="text-xs font-bold text-brand-600 uppercase tracking-wider">Expert Technical Solutions</span>
+            <h1 className="text-3xl sm:text-4xl font-black text-slate-900">Computer Repairs & Managed IT Support</h1>
+            <p className="text-slate-600 text-sm">
+              Atharva Infotech engineers resolve motherboard issues, execute SSD data clones, install Wi-Fi networks, and manage corporate IT setups.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {services.map((srv) => (
+              <div key={srv.id} className="bg-white border border-slate-200 hover:border-brand-500 rounded-2xl p-6 flex flex-col justify-between transition space-y-6 shadow-sm hover-glow">
+                <div className="space-y-4">
+                  <div className="w-12 h-12 rounded-xl bg-brand-50 text-brand-600 flex items-center justify-center text-xl font-bold">
+                    <i className={`fa-solid ${srv.icon}`}></i>
+                  </div>
+                  <div>
+                    <h3 className="text-xl font-bold text-slate-900 mb-2">{srv.title}</h3>
+                    <p className="text-xs text-slate-600 leading-relaxed">{srv.shortDesc}</p>
+                  </div>
+
+                  <div className="space-y-2 pt-2 border-t border-slate-100">
+                    <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Included Scope</span>
+                    <ul className="space-y-1.5">
+                      {srv.details.map((item, idx) => (
+                        <li key={idx} className="text-xs text-slate-700 flex items-center gap-2">
+                          <i className="fa-solid fa-circle-check text-emerald-500 text-[10px]"></i> {item}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+
+                <div className="pt-4 border-t border-slate-100 space-y-3">
+                  <div className="flex justify-between items-center text-xs">
+                    <span className="text-slate-500 font-medium">Turnaround Time:</span>
+                    <span className="text-slate-900 font-bold">{srv.turnaround}</span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="text-xs text-slate-500 font-medium">Rates Starting From:</span>
+                    <span className="text-xl font-black text-emerald-600">{formatPrice(srv.priceFrom)}</span>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-2 pt-1">
+                    <button
+                      onClick={() => onBookService(srv)}
+                      className="bg-brand-600 hover:bg-brand-700 text-white font-bold py-2.5 rounded-xl text-xs transition shadow-sm"
+                    >
+                      Book Ticket
+                    </button>
+                    <a
+                      href={`https://wa.me/919820055588?text=Hi%20Atharva%20Infotech%2C%20I%20want%20to%20inquire%20about%20${encodeURIComponent(srv.title)}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2.5 rounded-xl text-xs transition text-center flex items-center justify-center gap-1 shadow-sm"
+                    >
+                      <i className="fa-brands fa-whatsapp"></i> WhatsApp
+                    </a>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      );
+    }
+
+    // --- CUSTOM PC BUILDER VIEW ---
+    function PcBuilderView({ pcBuild, setPcBuild, onAddToCart, formatPrice }) {
+      const totalWattage = useMemo(() => {
+        return pcBuild.cpu.power + pcBuild.gpu.power + pcBuild.ram.power + pcBuild.storage.power + 80;
+      }, [pcBuild]);
+
+      const totalPrice = useMemo(() => {
+        return pcBuild.cpu.price + pcBuild.gpu.price + pcBuild.ram.price + pcBuild.storage.price;
+      }, [pcBuild]);
+
+      const competitorEstimatedPrice = Math.round(totalPrice * 1.18);
+
+      const handleAddRigToCart = () => {
+        const customRig = {
+          id: `custom-pc-${Date.now()}`,
+          name: `Custom Build (${pcBuild.cpu.name.split(' ')[0]} + ${pcBuild.gpu.name.split(' ')[0]})`,
+          brand: 'Atharva Custom',
+          category: 'computers',
+          price: totalPrice,
+          competitorPrice: competitorEstimatedPrice,
+          competitorName: 'Market Prebuilts',
+          rating: 5.0,
+          reviewsCount: 1,
+          inStock: true,
+          stockCount: 1,
+          specs: { CPU: pcBuild.cpu.name, GPU: pcBuild.gpu.name, RAM: pcBuild.ram.name, Storage: pcBuild.storage.name },
+          image: 'https://images.unsplash.com/photo-1587202372775-e229f172b9d7?w=800&auto=format&fit=crop&q=80',
+          description: 'Custom assembled workstation PC with thermal stress test and cable management.'
+        };
+        onAddToCart(customRig);
+      };
+
+      return (
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8">
+          <div className="text-center max-w-2xl mx-auto space-y-2">
+            <span className="text-xs font-bold text-brand-600 uppercase tracking-wider">Custom PC Cost Calculator</span>
+            <h1 className="text-3xl font-black text-slate-900">Interactive Rig Configurator</h1>
+            <p className="text-slate-600 text-sm">Assemble custom workstation or gaming rigs with wholesale component pricing.</p>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+            <div className="lg:col-span-8 space-y-4">
+              
+              {/* CPU Picker */}
+              <div className="bg-white border border-slate-200 rounded-2xl p-4 space-y-2 shadow-sm">
+                <label className="text-xs font-bold text-slate-800 uppercase tracking-wider flex items-center gap-2">
+                  <i className="fa-solid fa-microchip text-brand-600"></i> Processor (CPU)
+                </label>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                  {PC_PARTS.cpus.map((cpu) => (
+                    <button
+                      key={cpu.name}
+                      onClick={() => setPcBuild({ ...pcBuild, cpu })}
+                      className={`p-3 rounded-xl border text-left text-xs transition flex justify-between items-center ${pcBuild.cpu.name === cpu.name ? 'border-brand-600 bg-brand-50 text-brand-700 font-bold' : 'border-slate-200 bg-slate-50 text-slate-700 hover:border-slate-300'}`}
+                    >
+                      <div>
+                        <div className="text-slate-900">{cpu.name}</div>
+                        <div className="text-[10px] text-slate-500">{cpu.power}W Power</div>
+                      </div>
+                      <span className="text-brand-600 font-bold">{formatPrice(cpu.price)}</span>
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* GPU Picker */}
+              <div className="bg-white border border-slate-200 rounded-2xl p-4 space-y-2 shadow-sm">
+                <label className="text-xs font-bold text-slate-800 uppercase tracking-wider flex items-center gap-2">
+                  <i className="fa-solid fa-display text-brand-600"></i> Graphics Card (GPU)
+                </label>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                  {PC_PARTS.gpus.map((gpu) => (
+                    <button
+                      key={gpu.name}
+                      onClick={() => setPcBuild({ ...pcBuild, gpu })}
+                      className={`p-3 rounded-xl border text-left text-xs transition flex justify-between items-center ${pcBuild.gpu.name === gpu.name ? 'border-brand-600 bg-brand-50 text-brand-700 font-bold' : 'border-slate-200 bg-slate-50 text-slate-700 hover:border-slate-300'}`}
+                    >
+                      <div>
+                        <div className="text-slate-900">{gpu.name}</div>
+                        <div className="text-[10px] text-slate-500">{gpu.power}W Power</div>
+                      </div>
+                      <span className="text-brand-600 font-bold">{formatPrice(gpu.price)}</span>
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* RAM Picker */}
+              <div className="bg-white border border-slate-200 rounded-2xl p-4 space-y-2 shadow-sm">
+                <label className="text-xs font-bold text-slate-800 uppercase tracking-wider flex items-center gap-2">
+                  <i className="fa-solid fa-memory text-brand-600"></i> System Memory (RAM)
+                </label>
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                  {PC_PARTS.rams.map((ram) => (
+                    <button
+                      key={ram.name}
+                      onClick={() => setPcBuild({ ...pcBuild, ram })}
+                      className={`p-3 rounded-xl border text-left text-xs transition flex justify-between items-center ${pcBuild.ram.name === ram.name ? 'border-brand-600 bg-brand-50 text-brand-700 font-bold' : 'border-slate-200 bg-slate-50 text-slate-700 hover:border-slate-300'}`}
+                    >
+                      <div>
+                        <div className="text-slate-900">{ram.name}</div>
+                      </div>
+                      <span className="text-brand-600 font-bold">{formatPrice(ram.price)}</span>
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Storage Picker */}
+              <div className="bg-white border border-slate-200 rounded-2xl p-4 space-y-2 shadow-sm">
+                <label className="text-xs font-bold text-slate-800 uppercase tracking-wider flex items-center gap-2">
+                  <i className="fa-solid fa-hard-drive text-brand-600"></i> Primary M.2 Storage
+                </label>
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                  {PC_PARTS.storages.map((st) => (
+                    <button
+                      key={st.name}
+                      onClick={() => setPcBuild({ ...pcBuild, storage: st })}
+                      className={`p-3 rounded-xl border text-left text-xs transition flex justify-between items-center ${pcBuild.storage.name === st.name ? 'border-brand-600 bg-brand-50 text-brand-700 font-bold' : 'border-slate-200 bg-slate-50 text-slate-700 hover:border-slate-300'}`}
+                    >
+                      <div>
+                        <div className="text-slate-900">{st.name}</div>
+                      </div>
+                      <span className="text-brand-600 font-bold">{formatPrice(st.price)}</span>
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+            </div>
+
+            <div className="lg:col-span-4 space-y-4">
+              <div className="bg-white border border-slate-200 rounded-2xl p-6 space-y-6 sticky top-28 shadow-sm">
+                <h3 className="text-lg font-bold text-slate-900 border-b border-slate-100 pb-3">Rig Build Summary</h3>
+
+                <div className="space-y-3 text-xs">
+                  <div className="flex justify-between pb-2 border-b border-slate-100">
+                    <span className="text-slate-500">CPU:</span>
+                    <span className="font-bold text-slate-900 text-right">{pcBuild.cpu.name}</span>
+                  </div>
+                  <div className="flex justify-between pb-2 border-b border-slate-100">
+                    <span className="text-slate-500">GPU:</span>
+                    <span className="font-bold text-slate-900 text-right">{pcBuild.gpu.name}</span>
+                  </div>
+                  <div className="flex justify-between pb-2 border-b border-slate-100">
+                    <span className="text-slate-500">RAM:</span>
+                    <span className="font-bold text-slate-900 text-right">{pcBuild.ram.name}</span>
+                  </div>
+                  <div className="flex justify-between pb-2 border-b border-slate-100">
+                    <span className="text-slate-500">SSD:</span>
+                    <span className="font-bold text-slate-900 text-right">{pcBuild.storage.name}</span>
+                  </div>
+                </div>
+
+                <div className="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-2">
+                  <div className="flex justify-between text-xs">
+                    <span className="text-slate-600 font-medium">Estimated Power Draw:</span>
+                    <span className="text-amber-600 font-extrabold">{totalWattage} Watts</span>
+                  </div>
+                  <div className="text-[11px] text-slate-500">
+                    Recommended PSU: <strong>{Math.ceil((totalWattage * 1.25) / 50) * 50}W 80+ Gold</strong>
+                  </div>
+                </div>
+
+                <div className="space-y-2 pt-2">
+                  <div className="flex justify-between text-xs text-slate-500">
+                    <span>Market Prebuilt Quote:</span>
+                    <span className="line-through">{formatPrice(competitorEstimatedPrice)}</span>
+                  </div>
+                  <div className="flex justify-between items-baseline">
+                    <span className="text-sm font-bold text-slate-800">Atharva Direct Rate:</span>
+                    <span className="text-2xl font-black text-emerald-600">{formatPrice(totalPrice)}</span>
+                  </div>
+
+                  <button
+                    onClick={handleAddRigToCart}
+                    className="w-full bg-brand-600 hover:bg-brand-700 text-white font-bold py-3.5 rounded-xl shadow-md transition flex items-center justify-center gap-2 text-sm"
+                  >
+                    <i className="fa-solid fa-cart-plus"></i> Add Custom Rig to Cart
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    // --- TRACKING VIEW ---
+    function TrackingView({ serviceTickets }) {
+      const [ticketSearch, setTicketSearch] = useState('');
+      const [foundTicket, setFoundTicket] = useState(null);
+
+      const handleSearch = (e) => {
+        e.preventDefault();
+        const found = serviceTickets.find((t) => t.id.toLowerCase() === ticketSearch.trim().toLowerCase());
+        setFoundTicket(found || 'not_found');
+      };
+
+      return (
+        <div className="max-w-4xl mx-auto px-4 py-12 space-y-8">
+          <div className="text-center space-y-2">
+            <h1 className="text-3xl font-black text-slate-900">Track Order & Service Ticket</h1>
+            <p className="text-slate-600 text-sm">Enter your reference ticket code to inspect progress.</p>
+          </div>
+
+          <form onSubmit={handleSearch} className="flex gap-2 max-w-lg mx-auto">
+            <input
+              type="text"
+              placeholder="e.g. ATH-4892 or ATH-102"
+              value={ticketSearch}
+              onChange={(e) => setTicketSearch(e.target.value)}
+              className="flex-1 bg-white border border-slate-300 rounded-xl px-4 py-3 text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:border-brand-500 shadow-sm"
+            />
+            <button type="submit" className="bg-brand-600 hover:bg-brand-700 text-white px-6 py-3 rounded-xl font-bold text-sm shadow-sm">
+              Lookup
+            </button>
+          </form>
+
+          {foundTicket === 'not_found' && (
+            <div className="bg-rose-50 border border-rose-200 text-rose-700 p-4 rounded-xl text-center text-xs font-semibold">
+              No active ticket or order matching "{ticketSearch}" was found.
+            </div>
+          )}
+
+          {foundTicket && foundTicket !== 'not_found' && (
+            <div className="bg-white border border-slate-200 rounded-2xl p-6 space-y-4 shadow-sm">
+              <div className="flex justify-between items-center border-b border-slate-100 pb-3">
+                <div>
+                  <span className="text-xs text-slate-500 block">Reference ID</span>
+                  <span className="text-base font-bold text-slate-900">{foundTicket.id}</span>
+                </div>
+                <span className="bg-emerald-100 text-emerald-800 border border-emerald-300 px-3 py-1 rounded-full text-xs font-extrabold">
+                  {foundTicket.status || 'Confirmed & Scheduled'}
+                </span>
+              </div>
+
+              <div className="grid grid-cols-2 gap-4 text-xs">
+                <div>
+                  <span className="text-slate-500 block">Requested Item/Service:</span>
+                  <span className="text-slate-900 font-bold">{foundTicket.serviceTitle}</span>
+                </div>
+                <div>
+                  <span className="text-slate-500 block">Customer Name:</span>
+                  <span className="text-slate-900 font-bold">{foundTicket.customerName}</span>
+                </div>
+                <div>
+                  <span className="text-slate-500 block">Scheduled Time:</span>
+                  <span className="text-slate-900 font-bold">{foundTicket.date} at {foundTicket.time}</span>
+                </div>
+                <div>
+                  <span className="text-slate-500 block">Location Option:</span>
+                  <span className="text-slate-900 font-bold uppercase">{foundTicket.locationType}</span>
+                </div>
+              </div>
+            </div>
+          )}
+
+          <div className="bg-white border border-slate-200 rounded-2xl p-6 space-y-4 shadow-sm">
+            <h3 className="text-sm font-bold text-slate-900">Active Service Tickets</h3>
+            {serviceTickets.length === 0 ? (
+              <p className="text-xs text-slate-500">No active tickets created in this session yet.</p>
+            ) : (
+              <div className="space-y-3">
+                {serviceTickets.map((t) => (
+                  <div key={t.id} className="bg-slate-50 border border-slate-200 p-3.5 rounded-xl flex justify-between items-center text-xs">
+                    <div>
+                      <span className="font-bold text-brand-600 block">{t.id}</span>
+                      <span className="text-slate-800 font-medium">{t.serviceTitle}</span>
+                    </div>
+                    <span className="text-slate-500">{t.date}</span>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+      );
+    }
+
+    // --- ADMIN DASHBOARD ---
+    function AdminView({ products, setProducts, serviceTickets, onOpenApiGuide, formatPrice }) {
+      const [showAddModal, setShowAddModal] = useState(false);
+      const [newProd, setNewProd] = useState({
+        name: '',
+        brand: 'Dell',
+        category: 'monitors',
+        price: '',
+        competitorPrice: '',
+        stockCount: 10,
+        image: 'https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?w=800&auto=format&fit=crop&q=80',
+        description: ''
+      });
+
+      const handleAddProduct = (e) => {
+        e.preventDefault();
+        const pPrice = Number(newProd.price);
+        const compPrice = newProd.competitorPrice ? Number(newProd.competitorPrice) : Math.round(pPrice * 1.15);
+
+        const p = {
+          id: `p-${Date.now()}`,
+          name: newProd.name,
+          brand: newProd.brand,
+          category: newProd.category,
+          price: pPrice,
+          competitorPrice: compPrice,
+          competitorName: 'Flipkart',
+          rating: 5.0,
+          reviewsCount: 0,
+          inStock: true,
+          stockCount: Number(newProd.stockCount),
+          specs: { Status: 'In Stock' },
+          image: newProd.image || 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&auto=format&fit=crop&q=80',
+          description: newProd.description || 'Hardware product.'
+        };
+        setProducts([p, ...products]);
+        setShowAddModal(false);
+      };
+
+      return (
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-slate-200 pb-5">
+            <div>
+              <h1 className="text-2xl font-black text-slate-900">Atharva Control Center</h1>
+              <p className="text-xs text-slate-500">Manage catalog stock, competitor discount badges, and service tickets.</p>
+            </div>
+            <div className="flex gap-2">
+              <button
+                onClick={onOpenApiGuide}
+                className="bg-white hover:bg-slate-50 text-slate-700 border border-slate-300 font-bold px-4 py-2 rounded-xl text-xs flex items-center gap-2 shadow-sm"
+              >
+                <i className="fa-solid fa-plug text-brand-600"></i> Supplier Integration API
+              </button>
+              <button
+                onClick={() => setShowAddModal(true)}
+                className="bg-brand-600 hover:bg-brand-700 text-white font-bold px-4 py-2 rounded-xl text-xs flex items-center gap-2 shadow-sm"
+              >
+                <i className="fa-solid fa-plus"></i> Add Product
+              </button>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div className="bg-white border border-slate-200 p-5 rounded-2xl space-y-2 shadow-sm">
+              <span className="text-xs font-bold text-slate-500">Total Products</span>
+              <div className="text-2xl font-black text-slate-900">{products.length} Items</div>
+            </div>
+            <div className="bg-white border border-slate-200 p-5 rounded-2xl space-y-2 shadow-sm">
+              <span className="text-xs font-bold text-slate-500">Service Tickets</span>
+              <div className="text-2xl font-black text-brand-600">{serviceTickets.length} Active</div>
+            </div>
+            <div className="bg-white border border-slate-200 p-5 rounded-2xl space-y-2 shadow-sm">
+              <span className="text-xs font-bold text-slate-500">Total Catalog Inventory</span>
+              <div className="text-2xl font-black text-emerald-600">
+                {formatPrice(products.reduce((acc, p) => acc + p.price * p.stockCount, 0))}
+              </div>
+            </div>
+            <div className="bg-white border border-slate-200 p-5 rounded-2xl space-y-2 shadow-sm">
+              <span className="text-xs font-bold text-slate-500">Supplier Feed</span>
+              <div className="text-sm font-bold text-emerald-600 flex items-center gap-1.5 pt-1">
+                <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span> Connected
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-white border border-slate-200 rounded-2xl overflow-hidden space-y-4 p-5 shadow-sm">
+            <h3 className="font-bold text-slate-900 text-base">Inventory & Competitor Price Table</h3>
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-xs text-slate-700">
+                <thead className="bg-slate-100 text-slate-600 uppercase tracking-wider font-bold">
+                  <tr>
+                    <th className="p-3">Product Title</th>
+                    <th className="p-3">Brand</th>
+                    <th className="p-3">Online Price</th>
+                    <th className="p-3">Atharva Price</th>
+                    <th className="p-3">Savings</th>
+                    <th className="p-3">Stock</th>
+                    <th className="p-3 text-right">Actions</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-slate-100">
+                  {products.map((p) => (
+                    <tr key={p.id} className="hover:bg-slate-50">
+                      <td className="p-3 font-bold text-slate-900 flex items-center gap-2">
+                        <img src={p.image} className="w-8 h-8 rounded object-cover" />
+                        <span className="line-clamp-1">{p.name}</span>
+                      </td>
+                      <td className="p-3 font-semibold">{p.brand}</td>
+                      <td className="p-3 text-slate-400 line-through">{formatPrice(p.competitorPrice)}</td>
+                      <td className="p-3 font-black text-emerald-600">{formatPrice(p.price)}</td>
+                      <td className="p-3 font-bold text-emerald-700">
+                        {formatPrice(p.competitorPrice - p.price)}
+                      </td>
+                      <td className="p-3">
+                        <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-100 text-emerald-800">
+                          {p.stockCount} units
+                        </span>
+                      </td>
+                      <td className="p-3 text-right">
+                        <button
+                          onClick={() => setProducts(products.filter((item) => item.id !== p.id))}
+                          className="text-rose-600 hover:text-rose-800 font-bold"
+                        >
+                          Delete
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          {showAddModal && (
+            <div className="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
+              <div className="bg-white border border-slate-200 rounded-2xl max-w-md w-full p-6 space-y-4 relative shadow-2xl">
+                <button onClick={() => setShowAddModal(false)} className="absolute top-4 right-4 text-slate-400 hover:text-slate-800">
+                  <i className="fa-solid fa-xmark"></i>
+                </button>
+                <h3 className="text-lg font-bold text-slate-900">Add Product to Store</h3>
+                <form onSubmit={handleAddProduct} className="space-y-3 text-xs">
+                  <div>
+                    <label className="text-slate-600 block mb-1 font-semibold">Product Title</label>
+                    <input
+                      required
+                      type="text"
+                      value={newProd.name}
+                      onChange={(e) => setNewProd({ ...newProd, name: e.target.value })}
+                      className="w-full bg-slate-50 border border-slate-300 rounded-lg p-2.5 text-slate-900"
+                      placeholder="e.g. Dell UltraSharp 27 4K Monitor"
+                    />
+                  </div>
+                  <div className="grid grid-cols-2 gap-2">
+                    <div>
+                      <label className="text-slate-600 block mb-1 font-semibold">Brand</label>
+                      <select
+                        value={newProd.brand}
+                        onChange={(e) => setNewProd({ ...newProd, brand: e.target.value })}
+                        className="w-full bg-slate-50 border border-slate-300 rounded-lg p-2.5 text-slate-900"
+                      >
+                        {BRANDS_LIST.filter((b) => b !== 'all').map((b) => (
+                          <option key={b} value={b}>{b}</option>
+                        ))}
+                      </select>
+                    </div>
+                    <div>
+                      <label className="text-slate-600 block mb-1 font-semibold">Category</label>
+                      <select
+                        value={newProd.category}
+                        onChange={(e) => setNewProd({ ...newProd, category: e.target.value })}
+                        className="w-full bg-slate-50 border border-slate-300 rounded-lg p-2.5 text-slate-900"
+                      >
+                        {CATEGORIES.filter((c) => c.id !== 'all').map((c) => (
+                          <option key={c.id} value={c.id}>{c.label}</option>
+                        ))}
+                      </select>
+                    </div>
+                  </div>
+                  <div className="grid grid-cols-2 gap-2">
+                    <div>
+                      <label className="text-slate-600 block mb-1 font-semibold">Atharva Price</label>
+                      <input
+                        required
+                        type="number"
+                        value={newProd.price}
+                        onChange={(e) => setNewProd({ ...newProd, price: e.target.value })}
+                        className="w-full bg-slate-50 border border-slate-300 rounded-lg p-2.5 text-slate-900"
+                      />
+                    </div>
+                    <div>
+                      <label className="text-slate-600 block mb-1 font-semibold">Flipkart/Amazon Price</label>
+                      <input
+                        type="number"
+                        placeholder="Auto calculated"
+                        value={newProd.competitorPrice}
+                        onChange={(e) => setNewProd({ ...newProd, competitorPrice: e.target.value })}
+                        className="w-full bg-slate-50 border border-slate-300 rounded-lg p-2.5 text-slate-900"
+                      />
+                    </div>
+                  </div>
+                  <button type="submit" className="w-full bg-brand-600 hover:bg-brand-700 text-white font-bold py-3 rounded-xl mt-2 shadow-sm">
+                    Save Product
+                  </button>
+                </form>
+              </div>
+            </div>
+          )}
+        </div>
+      );
+    }
+
+    // --- SERVICE BOOKING MODAL ---
+    function ServiceBookingModal({ service, onClose, onSuccess }) {
+      const [formData, setFormData] = useState({
+        name: '',
+        email: '',
+        phone: '',
+        date: '',
+        time: '10:00 AM',
+        locationType: 'on-site',
+        issueDesc: ''
+      });
+
+      const handleSubmit = (e) => {
+        e.preventDefault();
+        const ticket = {
+          id: `ATH-${Math.floor(1000 + Math.random() * 9000)}`,
+          serviceTitle: service.title,
+          customerName: formData.name,
+          date: formData.date || 'Tomorrow',
+          time: formData.time,
+          locationType: formData.locationType,
+          status: 'Confirmed & Scheduled'
+        };
+        onSuccess(ticket);
+      };
+
+      return (
+        <div className="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto">
+          <div className="bg-white border border-slate-200 rounded-2xl max-w-lg w-full p-6 space-y-5 relative my-8 shadow-2xl">
+            <button onClick={onClose} className="absolute top-4 right-4 text-slate-400 hover:text-slate-800">
+              <i className="fa-solid fa-xmark"></i>
+            </button>
+
+            <div>
+              <span className="text-xs font-bold text-brand-600 uppercase">Atharva Ticket Generator</span>
+              <h3 className="text-xl font-bold text-slate-900">Book {service.title}</h3>
+            </div>
+
+            <form onSubmit={handleSubmit} className="space-y-4 text-xs">
+              <div>
+                <label className="text-slate-600 block mb-1 font-semibold">Full Name</label>
+                <input
+                  required
+                  type="text"
+                  value={formData.name}
+                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                  className="w-full bg-slate-50 border border-slate-300 rounded-lg p-2.5 text-slate-900"
+                  placeholder="e.g. Ramesh Kumar"
+                />
+              </div>
+
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label className="text-slate-600 block mb-1 font-semibold">Email</label>
+                  <input
+                    required
+                    type="email"
+                    value={formData.email}
+                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                    className="w-full bg-slate-50 border border-slate-300 rounded-lg p-2.5 text-slate-900"
+                  />
+                </div>
+                <div>
+                  <label className="text-slate-600 block mb-1 font-semibold">Phone Number</label>
+                  <input
+                    required
+                    type="tel"
+                    value={formData.phone}
+                    onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                    className="w-full bg-slate-50 border border-slate-300 rounded-lg p-2.5 text-slate-900"
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-3 gap-2">
+                <div>
+                  <label className="text-slate-600 block mb-1 font-semibold">Date</label>
+                  <input
+                    required
+                    type="date"
+                    value={formData.date}
+                    onChange={(e) => setFormData({ ...formData, date: e.target.value })}
+                    className="w-full bg-slate-50 border border-slate-300 rounded-lg p-2 text-slate-900"
+                  />
+                </div>
+                <div>
+                  <label className="text-slate-600 block mb-1 font-semibold">Time Slot</label>
+                  <select
+                    value={formData.time}
+                    onChange={(e) => setFormData({ ...formData, time: e.target.value })}
+                    className="w-full bg-slate-50 border border-slate-300 rounded-lg p-2 text-slate-900"
+                  >
+                    <option>10:00 AM</option>
+                    <option>01:00 PM</option>
+                    <option>04:00 PM</option>
+                  </select>
+                </div>
+                <div>
+                  <label className="text-slate-600 block mb-1 font-semibold">Option</label>
+                  <select
+                    value={formData.locationType}
+                    onChange={(e) => setFormData({ ...formData, locationType: e.target.value })}
+                    className="w-full bg-slate-50 border border-slate-300 rounded-lg p-2 text-slate-900"
+                  >
+                    <option value="on-site">On-site Visit</option>
+                    <option value="store-dropoff">Store Dropoff</option>
+                  </select>
+                </div>
+              </div>
+
+              <div>
+                <label className="text-slate-600 block mb-1 font-semibold">Issue Details</label>
+                <textarea
+                  rows="3"
+                  value={formData.issueDesc}
+                  onChange={(e) => setFormData({ ...formData, issueDesc: e.target.value })}
+                  placeholder="Describe hardware symptoms or setup needs..."
+                  className="w-full bg-slate-50 border border-slate-300 rounded-lg p-2.5 text-slate-900"
+                ></textarea>
+              </div>
+
+              <button type="submit" className="w-full bg-brand-600 hover:bg-brand-700 text-white font-bold py-3 rounded-xl shadow-sm">
+                Confirm Service Ticket
+              </button>
+            </form>
+          </div>
+        </div>
+      );
+    }
+
+    // --- PRODUCT COMPARISON MODAL ---
+    function CompareModal({ compareList, onClose, onRemoveFromCompare, onAddToCart, formatPrice }) {
+      return (
+        <div className="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="bg-white border border-slate-200 rounded-2xl max-w-4xl w-full p-6 space-y-6 relative max-h-[90vh] overflow-y-auto shadow-2xl">
+            <button onClick={onClose} className="absolute top-4 right-4 text-slate-400 hover:text-slate-800">
+              <i className="fa-solid fa-xmark text-lg"></i>
+            </button>
+
+            <div>
+              <span className="text-xs font-bold text-brand-600 uppercase">Product Comparison</span>
+              <h3 className="text-xl font-bold text-slate-900">Side-by-Side Specs & Savings</h3>
+            </div>
+
+            {compareList.length === 0 ? (
+              <p className="text-xs text-slate-500 text-center py-8">No products added for comparison. Click the compare icon on product cards.</p>
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                {compareList.map((p) => (
+                  <div key={p.id} className="bg-slate-50 border border-slate-200 p-4 rounded-xl space-y-3 relative">
+                    <button
+                      onClick={() => onRemoveFromCompare(p)}
+                      className="absolute top-2 right-2 text-rose-500 text-xs hover:text-rose-700"
+                    >
+                      <i className="fa-solid fa-xmark"></i>
+                    </button>
+                    <img src={p.image} className="w-full h-32 object-cover rounded-lg" />
+                    <span className="text-[10px] font-bold text-brand-600 uppercase">{p.brand}</span>
+                    <h4 className="font-bold text-xs text-slate-900 line-clamp-2">{p.name}</h4>
+                    
+                    <div className="bg-white p-2 rounded border border-slate-200 space-y-1">
+                      <div className="text-[10px] text-slate-400 line-through">Market: {formatPrice(p.competitorPrice)}</div>
+                      <div className="text-sm font-black text-emerald-600">Atharva: {formatPrice(p.price)}</div>
+                    </div>
+
+                    <div className="space-y-1 text-[11px]">
+                      {Object.entries(p.specs).map(([k, v]) => (
+                        <div key={k} className="flex justify-between border-b border-slate-100 pb-1">
+                          <span className="text-slate-500">{k}:</span>
+                          <span className="font-semibold text-slate-800">{v}</span>
+                        </div>
+                      ))}
+                    </div>
+
+                    <button
+                      onClick={() => onAddToCart(p)}
+                      className="w-full bg-brand-600 text-white font-bold py-2 rounded-lg text-xs"
+                    >
+                      Add to Cart
+                    </button>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+      );
+    }
+
+    // --- EMI CALCULATOR MODAL ---
+    function EmiCalculatorModal({ product, onClose, formatPrice }) {
+      const [tenure, setTenure] = useState(6);
+      const interestRate = 0.14; // 14% p.a.
+
+      const monthlyEmi = useMemo(() => {
+        const r = interestRate / 12;
+        const n = tenure;
+        const emi = (product.price * r * Math.pow(1 + r, n)) / (Math.pow(1 + r, n) - 1);
+        return Math.round(emi);
+      }, [product.price, tenure]);
+
+      return (
+        <div className="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="bg-white border border-slate-200 rounded-2xl max-w-md w-full p-6 space-y-4 relative shadow-2xl">
+            <button onClick={onClose} className="absolute top-4 right-4 text-slate-400 hover:text-slate-800">
+              <i className="fa-solid fa-xmark"></i>
+            </button>
+
+            <div className="flex items-center gap-2 text-brand-600">
+              <i className="fa-solid fa-calculator text-lg"></i>
+              <h3 className="text-lg font-bold text-slate-900">Easy EMI Estimator</h3>
+            </div>
+
+            <div className="bg-slate-50 p-3 rounded-xl border border-slate-200 space-y-1">
+              <h4 className="text-xs font-bold text-slate-900 line-clamp-1">{product.name}</h4>
+              <div className="text-xs text-emerald-600 font-extrabold">Price: {formatPrice(product.price)}</div>
+            </div>
+
+            <div className="space-y-2">
+              <label className="text-xs font-bold text-slate-600 block">Select Tenure (Months)</label>
+              <div className="grid grid-cols-4 gap-2">
+                {[3, 6, 9, 12].map((m) => (
+                  <button
+                    key={m}
+                    onClick={() => setTenure(m)}
+                    className={`py-2 rounded-lg text-xs font-bold transition ${tenure === m ? 'bg-brand-600 text-white' : 'bg-slate-100 text-slate-700'}`}
+                  >
+                    {m} Mo
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <div className="bg-emerald-50 border border-emerald-200 p-4 rounded-xl text-center space-y-1">
+              <span className="text-xs text-slate-500 font-medium">Estimated Monthly Installment</span>
+              <div className="text-2xl font-black text-emerald-600">{formatPrice(monthlyEmi)} / month</div>
+              <span className="text-[10px] text-slate-400">Calculated at standard bank interest rate</span>
+            </div>
+
+            <button onClick={onClose} className="w-full bg-slate-900 text-white font-bold py-2.5 rounded-xl text-xs">
+              Close Estimator
+            </button>
+          </div>
+        </div>
+      );
+    }
+
+    // --- CART DRAWER ---
+    function CartDrawer({ cart, onClose, onUpdateQty, onRemove, formatPrice }) {
+      const [promoCode, setPromoCode] = useState('');
+      const [discountPercent, setDiscountPercent] = useState(0);
+      const [isCheckingOut, setIsCheckingOut] = useState(false);
+      const [paymentMethod, setPaymentMethod] = useState('upi');
+      const [orderSuccess, setOrderSuccess] = useState(false);
+
+      const subtotal = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
+      const discount = (subtotal * discountPercent) / 100;
+      const total = subtotal - discount;
+
+      const totalMarketValue = cart.reduce((acc, item) => acc + item.competitorPrice * item.quantity, 0);
+      const totalSavings = totalMarketValue - total;
+
+      const applyPromo = () => {
+        if (promoCode.trim().toUpperCase() === 'ATHARVA10' || promoCode.trim().toUpperCase() === 'LOWESTPRICE') {
+          setDiscountPercent(10);
+        } else {
+          alert('Invalid promo code. Use ATHARVA10 or LOWESTPRICE');
+        }
+      };
+
+      const handleCompleteCheckout = (e) => {
+        e.preventDefault();
+        setOrderSuccess(true);
+      };
+
+      return (
+        <div className="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex justify-end">
+          <div className="bg-white border-l border-slate-200 w-full max-w-md h-full flex flex-col justify-between p-6 overflow-y-auto shadow-2xl">
+            <div>
+              <div className="flex justify-between items-center border-b border-slate-200 pb-4 mb-4">
+                <h3 className="text-lg font-bold text-slate-900 flex items-center gap-2">
+                  <i className="fa-solid fa-cart-shopping text-brand-600"></i> Shopping Cart
+                </h3>
+                <button onClick={onClose} className="text-slate-400 hover:text-slate-800">
+                  <i className="fa-solid fa-xmark text-lg"></i>
+                </button>
+              </div>
+
+              {orderSuccess ? (
+                <div className="text-center py-12 space-y-4">
+                  <div className="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center text-3xl mx-auto">
+                    <i className="fa-solid fa-check"></i>
+                  </div>
+                  <h3 className="text-xl font-bold text-slate-900">Order Confirmed!</h3>
+                  <p className="text-xs text-slate-600">Order reference #ATH-{Math.floor(10000 + Math.random() * 90000)} has been placed.</p>
+                  <button onClick={onClose} className="bg-brand-600 text-white font-bold px-6 py-2 rounded-xl text-xs">
+                    Done
+                  </button>
+                </div>
+              ) : cart.length === 0 ? (
+                <div className="text-center py-16 text-slate-400 space-y-3">
+                  <i className="fa-solid fa-cart-flatbed text-4xl"></i>
+                  <p className="text-sm">Your cart is empty.</p>
+                </div>
+              ) : !isCheckingOut ? (
+                <div className="space-y-4">
+                  {cart.map((item) => (
+                    <div key={item.id} className="bg-slate-50 border border-slate-200 rounded-xl p-3 flex gap-3 items-center">
+                      <img src={item.image} className="w-12 h-12 rounded object-cover" />
+                      <div className="flex-1 text-xs">
+                        <h4 className="font-bold text-slate-900 line-clamp-1">{item.name}</h4>
+                        <span className="text-emerald-600 font-bold">{formatPrice(item.price)}</span>
+                      </div>
+                      <div className="flex items-center space-x-2 bg-white border border-slate-200 rounded p-1">
+                        <button onClick={() => onUpdateQty(item.id, -1)} className="text-slate-500 hover:text-slate-900 px-1 font-bold">-</button>
+                        <span className="text-xs text-slate-900 px-1 font-bold">{item.quantity}</span>
+                        <button onClick={() => onUpdateQty(item.id, 1)} className="text-slate-500 hover:text-slate-900 px-1 font-bold">+</button>
+                      </div>
+                      <button onClick={() => onRemove(item.id)} className="text-rose-600 hover:text-rose-800 text-xs">
+                        <i className="fa-solid fa-trash"></i>
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <form onSubmit={handleCompleteCheckout} className="space-y-3 text-xs">
+                  <h4 className="font-bold text-slate-900 border-b border-slate-200 pb-2">Delivery & Payment</h4>
+                  <input required placeholder="Full Name" className="w-full bg-slate-50 border border-slate-200 p-2.5 rounded-lg text-slate-900" />
+                  <input required type="email" placeholder="Email Address" className="w-full bg-slate-50 border border-slate-200 p-2.5 rounded-lg text-slate-900" />
+                  <input required placeholder="Shipping Address" className="w-full bg-slate-50 border border-slate-200 p-2.5 rounded-lg text-slate-900" />
+                  
+                  <div className="pt-2">
+                    <label className="text-slate-600 block mb-1 font-semibold">Payment Option</label>
+                    <select
+                      value={paymentMethod}
+                      onChange={(e) => setPaymentMethod(e.target.value)}
+                      className="w-full bg-slate-50 border border-slate-200 p-2.5 rounded-lg text-slate-900 font-medium"
+                    >
+                      <option value="upi">UPI / Scan QR Code</option>
+                      <option value="card">Credit / Debit Card</option>
+                      <option value="cod">Cash on Delivery (Store Pickup)</option>
+                    </select>
+                  </div>
+
+                  {paymentMethod === 'upi' && (
+                    <div className="bg-slate-50 p-4 border border-slate-200 rounded-xl text-center space-y-2">
+                      <span className="text-xs font-bold text-slate-700 block">Scan QR Code via Google Pay / PhonePe</span>
+                      <div className="w-32 h-32 bg-white border border-slate-300 mx-auto rounded-lg flex items-center justify-center text-4xl text-slate-800">
+                        <i className="fa-solid fa-qrcode"></i>
+                      </div>
+                      <span className="text-[10px] text-slate-500 font-mono">UPI ID: atharvainfotech@upi</span>
+                    </div>
+                  )}
+
+                  <button type="submit" className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 rounded-xl mt-4 shadow-sm">
+                    Confirm Order {formatPrice(total)}
+                  </button>
+                  <button type="button" onClick={() => setIsCheckingOut(false)} className="w-full text-slate-500 py-1 text-center font-semibold">
+                    Return to Cart
+                  </button>
+                </form>
+              )}
+            </div>
+
+            {cart.length > 0 && !isCheckingOut && !orderSuccess && (
+              <div className="border-t border-slate-200 pt-4 space-y-3">
+                <div className="flex gap-2">
+                  <input
+                    type="text"
+                    placeholder="Coupon (ATHARVA10)"
+                    value={promoCode}
+                    onChange={(e) => setPromoCode(e.target.value)}
+                    className="flex-1 bg-slate-50 border border-slate-200 rounded-lg px-3 py-1.5 text-xs text-slate-900"
+                  />
+                  <button onClick={applyPromo} className="bg-slate-200 hover:bg-slate-300 text-slate-800 px-3 py-1.5 rounded-lg text-xs font-bold">
+                    Apply
+                  </button>
+                </div>
+
+                <div className="space-y-1.5 text-xs text-slate-600">
+                  <div className="flex justify-between">
+                    <span>Subtotal:</span>
+                    <span className="text-slate-900 font-bold">{formatPrice(subtotal)}</span>
+                  </div>
+                  {totalSavings > 0 && (
+                    <div className="flex justify-between text-emerald-700 font-extrabold bg-emerald-50 p-1.5 rounded">
+                      <span>Total Savings vs Online Apps:</span>
+                      <span>{formatPrice(totalSavings)}</span>
+                    </div>
+                  )}
+                  <div className="flex justify-between text-base font-extrabold text-slate-900 pt-2 border-t border-slate-200">
+                    <span>Total Payable:</span>
+                    <span className="text-emerald-600">{formatPrice(total)}</span>
+                  </div>
+                </div>
+
+                <button
+                  onClick={() => setIsCheckingOut(true)}
+                  className="w-full bg-brand-600 hover:bg-brand-700 text-white font-bold py-3 rounded-xl transition text-sm flex items-center justify-center gap-2 shadow-sm"
+                >
+                  Proceed to Checkout <i className="fa-solid fa-arrow-right"></i>
+                </button>
+              </div>
+            )}
+          </div>
+        </div>
+      );
+    }
+
+    // --- WISHLIST DRAWER ---
+    function WishlistDrawer({ wishlist, onClose, onAddToCart, onRemove, formatPrice }) {
+      return (
+        <div className="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex justify-end">
+          <div className="bg-white border-l border-slate-200 w-full max-w-md h-full flex flex-col justify-between p-6 overflow-y-auto shadow-2xl">
+            <div>
+              <div className="flex justify-between items-center border-b border-slate-200 pb-4 mb-4">
+                <h3 className="text-lg font-bold text-slate-900 flex items-center gap-2">
+                  <i className="fa-solid fa-heart text-rose-500"></i> Wishlist
+                </h3>
+                <button onClick={onClose} className="text-slate-400 hover:text-slate-800">
+                  <i className="fa-solid fa-xmark text-lg"></i>
+                </button>
+              </div>
+
+              {wishlist.length === 0 ? (
+                <div className="text-center py-16 text-slate-400 space-y-3">
+                  <i className="fa-regular fa-heart text-4xl"></i>
+                  <p className="text-sm">Your wishlist is empty.</p>
+                </div>
+              ) : (
+                <div className="space-y-4">
+                  {wishlist.map((item) => (
+                    <div key={item.id} className="bg-slate-50 border border-slate-200 rounded-xl p-3 flex gap-3 items-center">
+                      <img src={item.image} className="w-12 h-12 rounded object-cover" />
+                      <div className="flex-1 text-xs">
+                        <h4 className="font-bold text-slate-900 line-clamp-1">{item.name}</h4>
+                        <span className="text-emerald-600 font-bold">{formatPrice(item.price)}</span>
+                      </div>
+                      <button
+                        onClick={() => {
+                          onAddToCart(item);
+                          onRemove(item);
+                        }}
+                        className="bg-brand-600 text-white p-2 rounded-lg text-xs"
+                      >
+                        <i className="fa-solid fa-cart-plus"></i>
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    // --- PRODUCT DETAIL MODAL ---
+    function ProductDetailModal({ product, onClose, onAddToCart, onToggleWishlist, isWishlisted, onOpenEmi, formatPrice }) {
+      const savings = product.competitorPrice - product.price;
+
+      return (
+        <div className="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="bg-white border border-slate-200 rounded-2xl max-w-2xl w-full p-6 space-y-6 relative max-h-[90vh] overflow-y-auto shadow-2xl">
+            <button onClick={onClose} className="absolute top-4 right-4 text-slate-400 hover:text-slate-800">
+              <i className="fa-solid fa-xmark text-lg"></i>
+            </button>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="aspect-square rounded-xl overflow-hidden bg-slate-100">
+                <img src={product.image} className="w-full h-full object-cover" />
+              </div>
+
+              <div className="space-y-4">
+                <span className="text-xs font-bold text-brand-600 uppercase">{product.brand}</span>
+                <h2 className="text-xl font-bold text-slate-900 leading-snug">{product.name}</h2>
+                <div className="flex items-center gap-2 text-amber-500 text-xs">
+                  <i className="fa-solid fa-star"></i>
+                  <span className="font-bold text-slate-800">{product.rating}</span>
+                  <span className="text-slate-400">({product.reviewsCount} customer reviews)</span>
+                </div>
+
+                <div className="bg-emerald-50 border border-emerald-200 p-3 rounded-xl space-y-1">
+                  <div className="flex justify-between text-xs text-slate-500">
+                    <span>{product.competitorName} Price:</span>
+                    <span className="line-through">{formatPrice(product.competitorPrice)}</span>
+                  </div>
+                  <div className="flex justify-between items-baseline">
+                    <span className="text-xs font-bold text-slate-800">Atharva Wholesale Rate:</span>
+                    <span className="text-2xl font-black text-emerald-600">{formatPrice(product.price)}</span>
+                  </div>
+                  <div className="text-xs font-extrabold text-emerald-800">
+                    You save {formatPrice(savings)} directly at Atharva Infotech!
+                  </div>
+                </div>
+
+                <p className="text-xs text-slate-600 leading-relaxed">{product.description}</p>
+
+                <div className="space-y-1.5 pt-2 border-t border-slate-100">
+                  <span className="text-[10px] font-bold text-slate-400 uppercase">Hardware Specifications</span>
+                  <div className="grid grid-cols-2 gap-2 text-xs">
+                    {Object.entries(product.specs).map(([k, v]) => (
+                      <div key={k} className="bg-slate-50 p-2 rounded border border-slate-200">
+                        <span className="text-slate-400 block text-[10px]">{k}</span>
+                        <span className="text-slate-800 font-semibold">{v}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="flex gap-2 pt-2">
+                  <button
+                    onClick={() => {
+                      onAddToCart(product);
+                      onClose();
+                    }}
+                    className="flex-1 bg-brand-600 hover:bg-brand-700 text-white font-bold py-3 rounded-xl text-xs transition flex items-center justify-center gap-2 shadow-sm"
+                  >
+                    <i className="fa-solid fa-cart-plus"></i> Add to Cart
+                  </button>
+                  <button
+                    onClick={() => { onClose(); onOpenEmi(product); }}
+                    className="bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold px-3 py-3 rounded-xl text-xs border border-slate-300"
+                  >
+                    EMI
+                  </button>
+                  <button
+                    onClick={() => onToggleWishlist(product)}
+                    className={`p-3 rounded-xl text-xs border ${isWishlisted ? 'bg-rose-500 text-white border-rose-500' : 'border-slate-200 text-slate-600'}`}
+                  >
+                    <i className="fa-solid fa-heart"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    // --- API GUIDE MODAL ---
+    function ApiGuideModal({ onClose }) {
+      return (
+        <div className="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="bg-white border border-slate-200 rounded-2xl max-w-2xl w-full p-6 space-y-4 relative max-h-[90vh] overflow-y-auto text-xs text-slate-700 shadow-2xl">
+            <button onClick={onClose} className="absolute top-4 right-4 text-slate-400 hover:text-slate-800">
+              <i className="fa-solid fa-xmark text-lg"></i>
+            </button>
+
+            <div className="flex items-center gap-2 text-brand-600">
+              <i className="fa-solid fa-plug text-lg"></i>
+              <h3 className="text-lg font-bold text-slate-900">Distributor Supplier Integration</h3>
+            </div>
+
+            <p className="leading-relaxed">
+              Connect Atharva Infotech directly to distributor inventory feeds using environment variables.
+            </p>
+
+            <div className="bg-slate-900 p-4 rounded-xl text-emerald-400 font-mono text-[11px] space-y-1">
+              <div># Distributor API Credentials (.env.local)</div>
+              <div>ATHARVA_DISTRIBUTOR_FEED_URL="https://api.distributor.com/v1/stock"</div>
+              <div>ATHARVA_API_SECRET_KEY="ath_secret_key_prod"</div>
+              <div>SUPABASE_URL="https://your-project.supabase.co"</div>
+            </div>
+
+            <button onClick={onClose} className="w-full bg-brand-600 hover:bg-brand-700 text-white font-bold py-2.5 rounded-xl transition shadow-sm">
+              Close Guide
+            </button>
+          </div>
+        </div>
+      );
+    }
+
+    // MOUNT APP
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(<App />);
+  </script>
+</body>
+</html>
