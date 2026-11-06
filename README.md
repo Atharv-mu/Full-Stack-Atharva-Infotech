@@ -1,24 +1,26 @@
-# Atharva Infotech — IT Products & Services Storefront
+# Atharva Infotech | IT Products & Services Storefront
 
-A full-stack web project for **Atharva Infotech**, an IT hardware and services business. It consists of a feature-rich single-page storefront (catalog, PC builder, service booking, cart) and a REST API built with Node.js, Express and MongoDB for managing products and customer enquiries.
+A full-stack web project for **Atharva Infotech**, an IT hardware and services business. It has two parts: a feature-rich single-page storefront (product catalog, PC builder, service booking and cart), and a REST API built with Node.js, Express and MongoDB for managing products and customer enquiries.
 
-> **Project status:** The frontend and backend are both functional, but they are currently **independent of each other**. The storefront runs on built-in sample data and does not yet call the API. See [Current Limitations](#current-limitations) and [Roadmap](#roadmap).
+> **Project status:** Both the frontend and the backend work, but they are not connected yet. The storefront runs on built-in sample data and doesn't call the API. See [Current limitations](#current-limitations) and [Roadmap](#roadmap) for details.
 
 ---
 
-## Table of Contents
+## Contents
 
 - [Features](#features)
-- [Tech Stack](#tech-stack)
-- [Project Structure](#project-structure)
-- [Getting Started](#getting-started)
-- [Environment Variables](#environment-variables)
-- [API Reference](#api-reference)
-- [Data Models](#data-models)
+- [Tech stack](#tech-stack)
+- [Project structure](#project-structure)
+- [Getting started](#getting-started)
+- [Environment variables](#environment-variables)
+- [Scripts](#scripts)
+- [API reference](#api-reference)
+- [Data models](#data-models)
 - [Security](#security)
-- [Current Limitations](#current-limitations)
+- [Current limitations](#current-limitations)
 - [Roadmap](#roadmap)
-- [Production Checklist](#production-checklist)
+- [Production checklist](#production-checklist)
+- [License](#license)
 
 ---
 
@@ -26,44 +28,44 @@ A full-stack web project for **Atharva Infotech**, an IT hardware and services b
 
 ### Storefront (`frontend/`)
 
-- **Product catalog** with category and brand filters, price slider, in-stock toggle, text search, sorting, and grid/list views
-- **Price-savings display** showing the store price against a competitor price
+- **Product catalog** with category and brand filters, a price slider, an in-stock toggle, text search, sorting, and grid or list views
+- **Price comparison** that shows the store price next to a competitor's price
 - **Cart** with quantity controls and promo code support
 - **Wishlist** and **side-by-side product comparison**
-- **EMI calculator** for financing a purchase (14% p.a. assumed, selectable tenure)
-- **Custom PC Builder** — pick a CPU, GPU, RAM and storage; see total price and estimated power draw, then add the rig to the cart
-- **IT services booking** with a ticket ID generated on confirmation
-- **Service tracking** — look up a booking by ticket ID
-- **Multi-currency display** (INR, USD, EUR)
-- **WhatsApp and phone call-to-action** links for quick quotes
+- **EMI calculator** for financing a purchase (assumes 14% p.a., with a selectable tenure)
+- **Custom PC Builder:** choose a CPU, GPU, RAM and storage, see the total price and estimated power draw, then add the build to your cart
+- **IT services booking** that generates a ticket ID on confirmation
+- **Service tracking** to look up a booking by its ticket ID
+- **Multi-currency display** in INR, USD and EUR
+- **WhatsApp and phone links** for quick quotes
 - **Admin tab** for adding products to the in-browser catalog
 
 ### Backend API (`backend/`)
 
-- Product catalog endpoints with search, category and featured filters
-- Customer enquiry submission (public) and enquiry management (admin)
+- Product endpoints with search, category and featured filters
+- Public enquiry submission and admin-only enquiry management
 - Token-protected admin routes
 - Request hardening with Helmet, CORS and rate limiting
-- Mongoose schema validation
-- Database seeding script with sample products
+- Schema validation with Mongoose
+- A seeding script that loads sample products
 
 ---
 
-## Tech Stack
+## Tech stack
 
-| Layer      | Technology                                                                 |
-| ---------- | -------------------------------------------------------------------------- |
-| Frontend   | React 18 (UMD build via CDN), Babel Standalone, Tailwind CSS (CDN), Font Awesome |
-| Backend    | Node.js, Express 4                                                         |
-| Database   | MongoDB with Mongoose 8                                                    |
-| Security   | Helmet, CORS, express-rate-limit                                           |
-| Tooling    | dotenv, nodemon                                                            |
+| Layer    | Technology                                                                         |
+| -------- | ---------------------------------------------------------------------------------- |
+| Frontend | React 18 (UMD build via CDN), Babel Standalone, Tailwind CSS (CDN), Font Awesome   |
+| Backend  | Node.js, Express 4                                                                 |
+| Database | MongoDB with Mongoose 8                                                            |
+| Security | Helmet, CORS, express-rate-limit                                                   |
+| Tooling  | dotenv, nodemon                                                                    |
 
-The frontend is a single `index.html` file with no build step, so it can be served by any static file server.
+The frontend is a single `index.html` file with no build step, so any static file server can host it.
 
 ---
 
-## Project Structure
+## Project structure
 
 ```
 atharv-infotech/
@@ -84,12 +86,12 @@ atharv-infotech/
 
 ---
 
-## Getting Started
+## Getting started
 
 ### Prerequisites
 
 - [Node.js](https://nodejs.org/) 18 or later
-- MongoDB — either a local installation or a free [MongoDB Atlas](https://www.mongodb.com/atlas) cluster
+- MongoDB, either installed locally or hosted on a free [MongoDB Atlas](https://www.mongodb.com/atlas) cluster
 
 ### 1. Install backend dependencies
 
@@ -100,7 +102,7 @@ npm install
 
 ### 2. Configure environment variables
 
-Create a file named `.env` inside `backend/`:
+Create a `.env` file inside `backend/`:
 
 ```env
 PORT=5000
@@ -109,7 +111,7 @@ ADMIN_TOKEN=replace-with-a-long-random-secret
 FRONTEND_URL=http://127.0.0.1:5500
 ```
 
-The server will refuse to start if `MONGODB_URI` or `ADMIN_TOKEN` is missing. See [Environment Variables](#environment-variables) for details.
+The server won't start if `MONGODB_URI` or `ADMIN_TOKEN` is missing. See [Environment variables](#environment-variables) for details.
 
 ### 3. Seed sample data (optional)
 
@@ -117,17 +119,17 @@ The server will refuse to start if `MONGODB_URI` or `ADMIN_TOKEN` is missing. Se
 npm run seed
 ```
 
-> ⚠️ **Warning:** the seed script deletes **all existing products** before inserting the sample set. Do not run it against a database that holds real data.
+> **Warning:** The seed script deletes **all existing products** before inserting the sample set. Never run it against a database that holds real data.
 
 ### 4. Start the API
 
 ```bash
-npm run dev      # development, auto-restarts with nodemon
+npm run dev      # development, restarts automatically with nodemon
 # or
 npm start        # production
 ```
 
-Verify that it is running:
+To confirm it's running:
 
 ```bash
 curl http://localhost:5000/api/health
@@ -142,24 +144,36 @@ From the `frontend/` folder, serve the file with any static server:
 npx serve .
 ```
 
-You can also use the VS Code **Live Server** extension. Then open the URL printed in the terminal.
+The VS Code **Live Server** extension works too. Then open the URL printed in your terminal.
 
-> The storefront loads React, Tailwind and Babel from public CDNs, so an internet connection is required.
-
----
-
-## Environment Variables
-
-| Variable       | Required | Default | Description                                                                 |
-| -------------- | :------: | ------- | --------------------------------------------------------------------------- |
-| `MONGODB_URI`  | Yes      | —       | MongoDB connection string                                                   |
-| `ADMIN_TOKEN`  | Yes      | —       | Secret sent in the `x-admin-token` header to authorise admin requests       |
-| `PORT`         | No       | `5000`  | Port the API listens on                                                     |
-| `FRONTEND_URL` | No       | `*`     | Allowed CORS origin. Set this to your real frontend domain in production    |
+> The storefront loads React, Tailwind and Babel from public CDNs, so it needs an internet connection.
 
 ---
 
-## API Reference
+## Environment variables
+
+| Variable       | Required | Default | Description                                                              |
+| -------------- | :------: | ------- | ------------------------------------------------------------------------ |
+| `MONGODB_URI`  | Yes      | None    | MongoDB connection string                                                |
+| `ADMIN_TOKEN`  | Yes      | None    | Secret sent in the `x-admin-token` header to authorise admin requests    |
+| `PORT`         | No       | `5000`  | Port the API listens on                                                  |
+| `FRONTEND_URL` | No       | `*`     | Allowed CORS origin. Set it to your real frontend domain in production   |
+
+---
+
+## Scripts
+
+Run these from the `backend/` directory.
+
+| Command        | Description                                    |
+| -------------- | ---------------------------------------------- |
+| `npm start`    | Start the API with Node                        |
+| `npm run dev`  | Start the API with nodemon (auto-reload)       |
+| `npm run seed` | Replace all products with the sample data set  |
+
+---
+
+## API reference
 
 **Base URL:** `http://localhost:5000/api`
 
@@ -177,34 +191,34 @@ x-admin-token: YOUR_ADMIN_TOKEN
 
 ### Products
 
-| Method | Endpoint         | Access | Description                      |
-| ------ | ---------------- | ------ | -------------------------------- |
-| GET    | `/products`      | Public | List products (supports filters) |
-| GET    | `/products/:id`  | Public | Get a single product             |
-| POST   | `/products`      | Admin  | Create a product                 |
-| PUT    | `/products/:id`  | Admin  | Update a product                 |
-| DELETE | `/products/:id`  | Admin  | Delete a product                 |
+| Method | Endpoint        | Access | Description                      |
+| ------ | --------------- | ------ | -------------------------------- |
+| GET    | `/products`     | Public | List products (supports filters) |
+| GET    | `/products/:id` | Public | Get a single product             |
+| POST   | `/products`     | Admin  | Create a product                 |
+| PUT    | `/products/:id` | Admin  | Update a product                 |
+| DELETE | `/products/:id` | Admin  | Delete a product                 |
 
 **Query parameters for `GET /products`**
 
-| Parameter  | Example               | Behaviour                                                    |
-| ---------- | --------------------- | ------------------------------------------------------------ |
-| `category` | `?category=Printers`  | Exact category match                                         |
-| `search`   | `?search=hp`          | Case-insensitive match on name, brand or category            |
-| `featured` | `?featured=true`      | Returns only featured products                               |
+| Parameter  | Example              | Behaviour                                         |
+| ---------- | -------------------- | ------------------------------------------------- |
+| `category` | `?category=Printers` | Exact category match                              |
+| `search`   | `?search=hp`         | Case-insensitive match on name, brand or category |
+| `featured` | `?featured=true`     | Returns only featured products                    |
 
 Results are sorted newest first.
 
 ### Enquiries
 
-| Method | Endpoint          | Access | Description                         |
-| ------ | ----------------- | ------ | ----------------------------------- |
-| POST   | `/enquiries`      | Public | Submit a customer enquiry           |
-| GET    | `/enquiries`      | Admin  | List all enquiries, newest first    |
-| PATCH  | `/enquiries/:id`  | Admin  | Update an enquiry's `status`        |
-| DELETE | `/enquiries/:id`  | Admin  | Delete an enquiry                   |
+| Method | Endpoint         | Access | Description                      |
+| ------ | ---------------- | ------ | -------------------------------- |
+| POST   | `/enquiries`     | Public | Submit a customer enquiry        |
+| GET    | `/enquiries`     | Admin  | List all enquiries, newest first |
+| PATCH  | `/enquiries/:id` | Admin  | Update an enquiry's `status`     |
+| DELETE | `/enquiries/:id` | Admin  | Delete an enquiry                |
 
-**Example — submit an enquiry**
+**Example: submit an enquiry**
 
 ```bash
 curl -X POST http://localhost:5000/api/enquiries \
@@ -220,7 +234,7 @@ curl -X POST http://localhost:5000/api/enquiries \
 
 `name`, `phone` and `message` are required.
 
-**Example — create a product (admin)**
+**Example: create a product (admin)**
 
 ```bash
 curl -X POST http://localhost:5000/api/products \
@@ -237,43 +251,43 @@ curl -X POST http://localhost:5000/api/products \
 
 ### Error responses
 
-All errors return JSON in the form `{ "message": "..." }`.
+Errors are returned as JSON in the form `{ "message": "..." }`.
 
-| Status | Meaning                                          |
-| ------ | ------------------------------------------------ |
-| 400    | Validation failed or invalid ID                  |
-| 401    | Missing or incorrect admin token                 |
-| 404    | Resource or route not found                      |
+| Status | Meaning                                           |
+| ------ | ------------------------------------------------- |
+| 400    | Validation failed or invalid ID                   |
+| 401    | Missing or incorrect admin token                  |
+| 404    | Resource or route not found                       |
 | 429    | Rate limit exceeded (300 requests per 15 minutes) |
-| 500    | Server error                                     |
+| 500    | Server error                                      |
 
 ---
 
-## Data Models
+## Data models
 
 ### Product
 
-| Field         | Type    | Notes                                                                           |
-| ------------- | ------- | ------------------------------------------------------------------------------- |
-| `name`        | String  | Required                                                                        |
+| Field         | Type    | Notes                                                                                        |
+| ------------- | ------- | -------------------------------------------------------------------------------------------- |
+| `name`        | String  | Required                                                                                     |
 | `category`    | String  | Required. One of `Printers`, `Monitors`, `Computers`, `Accessories`, `Storage`, `Networking` |
-| `brand`       | String  | Optional                                                                        |
-| `price`       | Number  | Minimum 0                                                                       |
-| `description` | String  | Optional                                                                        |
-| `image`       | String  | Image URL, defaults to empty                                                    |
-| `stock`       | Boolean | Defaults to `true`                                                              |
-| `featured`    | Boolean | Defaults to `false`                                                             |
+| `brand`       | String  | Optional                                                                                     |
+| `price`       | Number  | Minimum 0                                                                                    |
+| `description` | String  | Optional                                                                                     |
+| `image`       | String  | Image URL. Defaults to empty                                                                 |
+| `stock`       | Boolean | Defaults to `true`                                                                           |
+| `featured`    | Boolean | Defaults to `false`                                                                          |
 
 ### Enquiry
 
-| Field     | Type   | Notes                                              |
-| --------- | ------ | -------------------------------------------------- |
-| `name`    | String | Required, max 100 characters                       |
-| `phone`   | String | Required, max 20 characters                        |
-| `email`   | String | Optional, lowercased, max 150 characters           |
-| `product` | String | Optional, max 200 characters                       |
-| `message` | String | Required, max 2000 characters                      |
-| `status`  | String | `new` (default), `contacted` or `closed`           |
+| Field     | Type   | Notes                                    |
+| --------- | ------ | ---------------------------------------- |
+| `name`    | String | Required, max 100 characters             |
+| `phone`   | String | Required, max 20 characters              |
+| `email`   | String | Optional, lowercased, max 150 characters |
+| `product` | String | Optional, max 200 characters             |
+| `message` | String | Required, max 2000 characters            |
+| `status`  | String | `new` (default), `contacted` or `closed` |
 
 Both models include automatic `createdAt` and `updatedAt` timestamps.
 
@@ -281,51 +295,51 @@ Both models include automatic `createdAt` and `updatedAt` timestamps.
 
 ## Security
 
-Measures already in place:
+Already in place:
 
 - **Helmet** sets secure HTTP headers
 - **Rate limiting** of 300 requests per 15 minutes per IP on all `/api/` routes
 - **Request size limit** of 100 KB on JSON bodies
 - **Schema validation** and field length limits through Mongoose
-- **Required secrets** — the server will not start without `ADMIN_TOKEN` and `MONGODB_URI`
+- **Required secrets:** the server won't start without `ADMIN_TOKEN` and `MONGODB_URI`
 
-Known gaps to address before going live are listed in the [Production Checklist](#production-checklist).
+The gaps that remain are covered in the [Production checklist](#production-checklist).
 
 ---
 
-## Current Limitations
+## Current limitations
 
-Being upfront about the current state of the project:
+To be upfront about where the project stands today:
 
-1. **The frontend does not call the backend.** Products, cart, wishlist, service tickets and the admin tab all run on in-memory data defined inside `index.html`. Anything added in the browser is lost on refresh.
-2. **Category lists differ.** The storefront uses categories such as *Monitors & Displays* and *Projectors & Screens*, while the API accepts only `Printers`, `Monitors`, `Computers`, `Accessories`, `Storage` and `Networking`. These need to be aligned when the two are connected.
-3. **Data shapes differ.** The storefront uses fields such as `inStock` and `competitorPrice`, whereas the API uses `stock` and has no competitor price field.
-4. **Checkout and service booking are simulated.** No orders or bookings are saved, and no payment is processed.
-5. **The in-app admin tab has no authentication.** It is visible to every visitor.
-6. **The "Supplier Integration API" dialog is a placeholder** that shows example environment variables; no distributor integration exists.
+1. **The frontend doesn't call the backend.** Products, cart, wishlist, service tickets and the admin tab all run on in-memory data inside `index.html`, so anything added in the browser is lost on refresh.
+2. **Category lists differ.** The storefront uses categories such as *Monitors & Displays* and *Projectors & Screens*, while the API accepts only `Printers`, `Monitors`, `Computers`, `Accessories`, `Storage` and `Networking`. They need to be aligned before the two are connected.
+3. **Data shapes differ.** The storefront uses fields like `inStock` and `competitorPrice`, while the API uses `stock` and has no competitor price field.
+4. **Checkout and service booking are simulated.** No orders or bookings are saved and no payment is processed.
+5. **The in-app admin tab has no authentication** and is visible to every visitor.
+6. **The "Supplier Integration API" dialog is a placeholder.** It shows example environment variables, but no distributor integration exists.
 7. **Promo codes are hard-coded** in the frontend (a 10% discount) and validated only in the browser.
 8. **The admin token is a single shared secret** compared as a plain string.
-9. **The frontend compiles JSX in the browser** with Babel Standalone, which is convenient for prototyping but slow and not recommended for production.
+9. **The frontend compiles JSX in the browser** using Babel Standalone. That's convenient for prototyping, but it is slow and not recommended for production.
 
 ---
 
 ## Roadmap
 
-Suggested next steps, roughly in priority order:
+Planned next steps, roughly in priority order:
 
 - [ ] Connect the storefront to the API (fetch products, submit enquiries and service bookings)
-- [ ] Align product categories and field names between frontend and backend
+- [ ] Align product categories and field names between the frontend and backend
 - [ ] Add proper admin authentication (JWT or session-based login) and remove the public admin tab
-- [ ] Persist orders and service tickets in MongoDB
+- [ ] Store orders and service tickets in MongoDB
 - [ ] Add a `.env.example` file to the backend
 - [ ] Move the frontend to a build tool such as Vite, with Tailwind compiled locally
-- [ ] Add input sanitisation for the `search` parameter (it is currently passed into a MongoDB regex)
+- [ ] Sanitise the `search` parameter, which is currently passed into a MongoDB regex
 - [ ] Add automated tests for the API
-- [ ] Integrate a payment gateway if online checkout is required
+- [ ] Integrate a payment gateway if online checkout is needed
 
 ---
 
-## Production Checklist
+## Production checklist
 
 Before deploying publicly:
 
@@ -336,23 +350,11 @@ Before deploying publicly:
 - [ ] Serve everything over HTTPS
 - [ ] Add a real admin login before exposing admin operations
 - [ ] Add real product images
-- [ ] Review the rate limit values for your expected traffic
+- [ ] Review the rate limit values against your expected traffic
 - [ ] Back up the MongoDB database, and never run `npm run seed` against production data
-
----
-
-## Scripts
-
-Run these from the `backend/` directory.
-
-| Command         | Description                                   |
-| --------------- | --------------------------------------------- |
-| `npm start`     | Start the API with Node                       |
-| `npm run dev`   | Start the API with nodemon (auto-reload)      |
-| `npm run seed`  | Replace all products with the sample data set |
 
 ---
 
 ## License
 
-No license file is included in this repository. Add one (for example MIT) if you plan to share or open-source the project.
+This repository doesn't include a license file yet. If you plan to share or open-source the project, add one (for example, MIT).
